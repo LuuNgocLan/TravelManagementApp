@@ -8,4 +8,32 @@
     <string name="error_email_or_password_is_wrong">Email or password is wrong!</string>
     <string name="checkbox_text_remember">Remember me</string>
     <string name="button_text_login">Sign in</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_name_tour">Tours</string>
+    <string name="tab_name_myaccount">Profile</string>
+    <string name="tab_name_places">Places</string>
+    <string name="tab_name_tours">Tours</string>
+    <string name="explore_our_latest_offers">Explore our latest offer</string>
+    <string name="top_destination">Top destinations around the world</string>
+    <string name="button_text_explore">Explore</string>
+    <string name="menu_id_mybooking">id_mybooking</string>
+    <string name="menu_id_myprofile">id_myprofile</string>
+    <string name="menu_id_myreviews">id_myreviews</string>
+    <string name="menu_mybooking">My bookings</string>
+    <string name="menu_myprofile">My profile</string>
+    <string name="menu_myreviews">My reviews</string>
+    <string name="profile_first_name">First name:</string>
+    <string name="profile_last_name">Last name:</string>
+    <string name="profile_email">Email:</string>
+    <string name="profile_phone">Phone:</string>
+    <string name="profile_city">City:</string>
+    <string name="profile_country">Country:</string>
+    <string name="search_01_where">01.Where?</string>
+    <string name="search_your_destination">Your destination</string>
+    <string name="search_02_when">02.When?</string>
+    <string name="search_check_in_date">Check in date</string>
+    <string name="button_proceed_to_results">Proceed to results</string>
+    <string name="search_check_out_date">Check out date</string>
 </resources>
