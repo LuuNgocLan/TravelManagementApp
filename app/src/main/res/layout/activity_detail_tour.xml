@@ -17,7 +17,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/height_slide"
             android:background="@color/colorPrimaryDark"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimaryDark"
@@ -36,7 +36,7 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_default_3_4"
+                    android:src="@drawable/img_1"
                     app:layout_collapseMode="parallax" />
             </RelativeLayout>
 
@@ -68,8 +68,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
                     android:weightSum="2">
 
                     <android.support.v7.widget.CardView
@@ -88,14 +88,12 @@
                                 android:id="@+id/tv_detail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/text_padding"
-                                android:text="Description"
-                                android:drawablePadding="@dimen/text_padding"
                                 android:layout_gravity="center"
                                 android:drawableLeft="@drawable/ic_info"
-                                />
+                                android:drawablePadding="@dimen/text_padding"
+                                android:padding="@dimen/text_padding"
+                                android:text="@string/tour_detail_description" />
                         </LinearLayout>
-
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
@@ -110,17 +108,15 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-
                             <TextView
                                 android:id="@+id/tv_program"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/text_padding"
-                                android:text="Program"
+                                android:layout_gravity="center"
                                 android:drawableLeft="@drawable/ic_list"
                                 android:drawablePadding="@dimen/text_padding"
-                                android:layout_gravity="center"
-                                />
+                                android:padding="@dimen/text_padding"
+                                android:text="@string/tour_detail_programs" />
                         </LinearLayout>
 
                     </android.support.v7.widget.CardView>
@@ -144,17 +140,15 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-
                             <TextView
                                 android:id="@+id/tv_reviews"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/text_padding"
-                                android:text="Reviews"
-                                android:drawablePadding="@dimen/text_padding"
-                                android:drawableLeft="@drawable/ic_like"
                                 android:layout_gravity="center"
-                                />
+                                android:drawableLeft="@drawable/ic_like"
+                                android:drawablePadding="@dimen/text_padding"
+                                android:padding="@dimen/text_padding"
+                                android:text="@string/tour_detail_reviews" />
                         </LinearLayout>
 
                     </android.support.v7.widget.CardView>
@@ -171,20 +165,23 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-
                             <TextView
                                 android:id="@+id/tv_changeDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/text_padding"
-                                android:text="Change date"
-                                android:drawablePadding="@dimen/text_padding"
-                                android:drawableLeft="@drawable/ic_date"
                                 android:layout_gravity="center"
-                                />
+                                android:drawableLeft="@drawable/ic_date"
+                                android:drawablePadding="@dimen/text_padding"
+                                android:padding="@dimen/text_padding"
+                                android:text="@string/tour_detail_change_date" />
                         </LinearLayout>
 
                     </android.support.v7.widget.CardView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 </LinearLayout>
             </LinearLayout>
 

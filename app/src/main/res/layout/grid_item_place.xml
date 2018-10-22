@@ -8,7 +8,7 @@
         android:id="@+id/imv_place"
         android:layout_width="@dimen/weight_image_item"
         android:layout_height="@dimen/height_image_item"
-        android:src="@drawable/img_default_3_4" />
+        android:src="@drawable/img_2" />
     <!--<ImageView-->
     <!--android:layout_width="@dimen/weight_image_item"-->
     <!--android:layout_height="@dimen/height_image_item"-->

@@ -1,6 +1,7 @@
 package luungoclan.min.traveltourmanagement.views.myAccount;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.models.menu.MenuModel;
+import luungoclan.min.traveltourmanagement.views.myProfile.MyProfileActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +55,11 @@ public class MyAccountFragment extends Fragment {
                     if (!headerList.get(groupPosition).hasChildren) {
                         if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_mybooking))) {
                             Toast.makeText(getContext(), "My booking", Toast.LENGTH_SHORT).show();
+//                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
+//                            getSupportActionBar().setTitle(R.string.menu_overtime);
+                        }
+                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_myprofile))) {
+                            startActivity(new Intent(getActivity(), MyProfileActivity.class));
 //                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
 //                            getSupportActionBar().setTitle(R.string.menu_overtime);
                         }
