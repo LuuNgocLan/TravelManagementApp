@@ -128,7 +128,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
         try {
             jsonObject.put("username", username);
             jsonObject.put("password", password);
-            jsonObject.put("active", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }

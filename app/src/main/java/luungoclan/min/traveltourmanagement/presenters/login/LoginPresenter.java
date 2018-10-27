@@ -31,19 +31,22 @@ public class LoginPresenter implements ILoginPresenter {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 Log.d(TAG, String.valueOf(response.code()));
                 if (response.code() >= 300) {
-                    if (response.code() == 422) {
+                    iLoginActivity.getTokenFailure_ServerError();
+                } else if (response.code() == 200) {
+                    if (response.body().getResultCode() == 422) {
                         iLoginActivity.getTokenFailure_WrongData();
                     }
-                    if (response.code() == 500){
+                    if (response.body().getResultCode() == 500) {
                         iLoginActivity.getTokenFailure_ServerError();
                     }
-
-                } else if (response.code() == 200) {
-                    //Save token
-                    token = response.body().getData();
-                    iLoginActivity.getTokenSuccess(response.body().getData());
+                    if (response.body().getResultCode() == 200) {
+                        //Save token
+                        token = response.body().getData();
+                        iLoginActivity.getTokenSuccess(response.body().getData());
+                    }
                 }
             }
+
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
