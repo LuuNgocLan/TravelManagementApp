@@ -27,7 +27,13 @@ public class MyProfileActivity extends AppCompatActivity implements IMyProfileAc
     }
 
     private void getProfile() {
-        myProfilePresenter.getMyProfile(LoginPresenter.token);
+
+        String token = LoginPresenter.token;
+        if (token != null) {
+            myProfilePresenter.getMyProfile(token);
+        } else {
+            loadDefaultDataToView();
+        }
     }
 
     private void init() {

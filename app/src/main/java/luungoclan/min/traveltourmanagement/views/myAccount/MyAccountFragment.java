@@ -99,6 +99,11 @@ public class MyAccountFragment extends Fragment {
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
+        menuModel = new MenuModel(getString(R.string.menu_id_setting), getString(R.string.menu_setting), true, false, getResources().getDrawable(R.drawable.ic_settings));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
 
     }
 
