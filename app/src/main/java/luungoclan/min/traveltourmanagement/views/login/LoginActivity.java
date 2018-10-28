@@ -2,11 +2,14 @@ package luungoclan.min.traveltourmanagement.views.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,41 +32,52 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     private JSONObject jsonObject;
     private ProgressDialog progressDialog;
     private String username, password;
+    private SharedPreferences sharedPreferences;
+    private CheckBox cbRemember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+        loadSharedPreferences();
         setEvent();
     }
 
     private void setEvent() {
         btnLogin.setOnClickListener(this);
+        cbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(cbRemember.isChecked()){
+                    saveInforLoginInSharedPreference(false);
+                }
+            }
+        });
     }
 
     private void init() {
+        sharedPreferences = getSharedPreferences("rememberMe", MODE_PRIVATE);
         loginPresenter = new LoginPresenter(this);
         tvErrorSomethingWrong = findViewById(R.id.tv_error_SomethingWrong);
         edtUsername = findViewById(R.id.edt_email);
         edtPass = findViewById(R.id.edt_password);
+        cbRemember = findViewById(R.id.cb_remember);
         btnLogin = findViewById(R.id.btn_login);
         //init progress dialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
+
     }
 
     @Override
     public void getTokenSuccess(String token) {
         progressDialog.dismiss();
         Toast.makeText(this, token, Toast.LENGTH_LONG).show();
-        saveTokenToSharePreference();
+        saveInforLoginInSharedPreference(true);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    private void saveTokenToSharePreference() {
     }
 
     @Override
@@ -92,6 +106,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
                 }
 
                 break;
+
         }
     }
 
@@ -115,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
             return false;
         }
 
-       return true;
+        return true;
     }
 
     private void showProgressDialog(String msg) {
@@ -132,4 +147,39 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
             e.printStackTrace();
         }
     }
+
+    private void loadSharedPreferences() {
+        String email = sharedPreferences.getString("username", null);
+        String pass = sharedPreferences.getString("password", null);
+        boolean isRemembered = sharedPreferences.getBoolean("remember", false);
+        cbRemember.setChecked(isRemembered);
+        if (isRemembered) {
+            if (email != null) {
+                edtUsername.setText(email);
+                edtPass.setText(pass);
+            }
+        } else {
+            edtUsername.setText("");
+            edtPass.setText("");
+        }
+
+    }
+    /**
+     * save data:  into shared preference to reuse
+     *
+     * @param isLoggingIn
+     */
+    private void saveInforLoginInSharedPreference(boolean isLoggingIn) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggingIn", isLoggingIn);
+        if (cbRemember.isChecked()) {
+            editor.putBoolean("remember", true);
+        } else {
+            editor.putBoolean("remember", false);
+        }
+        editor.putString("username", edtUsername.getText().toString());
+        editor.putString("password", edtPass.getText().toString());
+        editor.commit();
+    }
+
 }
