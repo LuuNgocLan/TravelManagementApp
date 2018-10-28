@@ -13,15 +13,18 @@ import android.widget.Toast;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.placeAdapter.PlaceImageAdapter;
+import luungoclan.min.traveltourmanagement.models.places.PlaceData;
+import luungoclan.min.traveltourmanagement.presenters.places.PlacePresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlacesFragment extends Fragment {
+public class PlacesFragment extends Fragment implements IPlacesFragment {
 
     private GridView gvPlaces;
     private PlaceImageAdapter placeImageAdapter;
-    private String[] placeList = {"Nha trang", "Đà Nẵng","Quy Nhơn","Pháp","Anh","Mỹ","Canada","Thailand","Campuchia"};
+    private PlacePresenter placePresenter;
+    private PlaceData placeData;
 
     public PlacesFragment() {
     }
@@ -30,10 +33,20 @@ public class PlacesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_places, container, false);
+        View view = inflater.inflate(R.layout.fragment_places, container, false);
         init(view);
+        initPresenter();
+        getDataPlaces();
         setEvent();
         return view;
+    }
+
+    private void getDataPlaces() {
+        placePresenter.getPlaceList();
+    }
+
+    private void initPresenter() {
+        placePresenter = new PlacePresenter(this);
     }
 
     private void setEvent() {
@@ -47,7 +60,21 @@ public class PlacesFragment extends Fragment {
 
     private void init(View view) {
         gvPlaces = view.findViewById(R.id.gv_places);
-        gvPlaces.setAdapter(new PlaceImageAdapter(getContext(),placeList));
     }
 
+    @Override
+    public void getPlaceListSuccess(PlaceData placeData) {
+        this.placeData = placeData;
+        if(placeData.getTotal()>0){
+            //load list place to gridview
+            gvPlaces.setAdapter(new PlaceImageAdapter(getContext(), placeData.getPlace()));
+        }
+
+
+    }
+
+    @Override
+    public void getPlaceListFailure() {
+
+    }
 }

@@ -11,20 +11,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import luungoclan.min.traveltourmanagement.R;
+import luungoclan.min.traveltourmanagement.models.places.Place;
 
 public class PlaceImageAdapter extends BaseAdapter {
     private Context context;
-    private String[] placeList;
+    private List<Place> placeList;
 
-    public PlaceImageAdapter(Context context, String[] placeList) {
+    public PlaceImageAdapter(Context context, List<Place> placeList) {
         this.context = context;
         this.placeList = placeList;
     }
 
     @Override
     public int getCount() {
-        return placeList.length;
+        return placeList.size();
     }
 
     @Override
@@ -63,7 +66,7 @@ public class PlaceImageAdapter extends BaseAdapter {
                 }
             });
             TextView tvNamePlace = gridView.findViewById(R.id.tv_namePlace);
-            tvNamePlace.setText(placeList[position]);
+            tvNamePlace.setText(placeList.get(position).getName());
         } else {
             gridView = (View) convertView;
         }
