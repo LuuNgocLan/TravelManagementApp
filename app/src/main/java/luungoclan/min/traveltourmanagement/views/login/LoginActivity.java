@@ -1,6 +1,7 @@
 package luungoclan.min.traveltourmanagement.views.login;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.presenters.login.LoginPresenter;
+import luungoclan.min.traveltourmanagement.utils.Common;
 import luungoclan.min.traveltourmanagement.utils.ValidateData;
 import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 import okhttp3.RequestBody;
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
         //init progress dialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCanceledOnTouchOutside(true);
 
     }
 
@@ -99,8 +101,13 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
                 if (checkValidFieldUsernameAndPassword()) {
                     passDataLoginToJson();
                     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-                    loginPresenter.getToken(body);
-                    showProgressDialog(getString(R.string.message_logging_in));
+                    if(Common.isConnected(getBaseContext())){
+                        loginPresenter.getToken(body);
+                        showProgressDialog(getString(R.string.message_logging_in));
+                    } else {
+                       showProgressDialog("No internet!");
+                    }
+
                 } else {
 
                 }

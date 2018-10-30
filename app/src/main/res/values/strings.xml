@@ -75,4 +75,5 @@
     <string name="button_submit">Submit</string>
     <string name="review_form_rating_me">Rating me</string>
     <string name="tour_change_date_title">Tour in another date</string>
+    <string name="tour_discount_percent">-10%</string>
 </resources>

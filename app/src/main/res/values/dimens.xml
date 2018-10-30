@@ -13,6 +13,10 @@
     <dimen name="item_padding">5dp</dimen>
     <dimen name="item_margin">3dp</dimen>
     <dimen name="height_button">36dp</dimen>
+    <dimen name="height_button_small">30dp</dimen>
     <dimen name="size_avatar">100dp</dimen>
     <dimen name="margin_item">8dp</dimen>
+    <dimen name="width_bookmark">48dp</dimen>
+    <dimen name="height_bookmark">56dp</dimen>
+    <dimen name="width_background_label">210dp</dimen>
 </resources>
