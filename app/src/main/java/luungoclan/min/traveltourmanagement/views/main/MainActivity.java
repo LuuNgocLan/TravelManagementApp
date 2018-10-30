@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.ViewPagerAdapter;
+import luungoclan.min.traveltourmanagement.models.tourList.DataTourList;
+import luungoclan.min.traveltourmanagement.views.publicTour.IPublicTourFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IPublicTourFragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
@@ -112,6 +114,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+    }
+
+    @Override
+    public void getListSaleTourSuccess(DataTourList dataTourList) {
+
+    }
+
+    @Override
+    public void getListSaleTourFailure() {
 
     }
 }

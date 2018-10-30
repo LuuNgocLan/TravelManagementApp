@@ -18,11 +18,13 @@ import java.util.List;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.tourAdapter.TourOfferAdapter;
 import luungoclan.min.traveltourmanagement.models.fakes.TourOffer;
+import luungoclan.min.traveltourmanagement.models.tourList.DataTourList;
+import luungoclan.min.traveltourmanagement.presenters.main.PublicTourPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PublicTourFragment extends Fragment implements View.OnClickListener {
+public class PublicTourFragment extends Fragment implements View.OnClickListener,IPublicTourFragment {
 
     private Button btnWhere, btnWhen, btnProceedToResult;
     private LinearLayout llSearchWhere, llSearchWhen;
@@ -31,6 +33,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     private TourOfferAdapter tourOfferAdapter;
     private RecyclerView rvTopDestinations;
     public boolean isShowWhereSearch = true, isShowWhenSearch = true;
+    private PublicTourPresenter publicTourPresenter;
 
     public PublicTourFragment() {
     }
@@ -40,28 +43,25 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_public_tour, container, false);
+        initPresenter();
         init(view);
+        loadData();
         setEvent();
-        fakeData();
         return view;
+    }
+
+    private void loadData() {
+        publicTourPresenter.getSaleTour();
+    }
+
+    private void initPresenter() {
+        publicTourPresenter = new PublicTourPresenter(this);
     }
 
     private void setEvent() {
         btnWhen.setOnClickListener(this);
         btnWhere.setOnClickListener(this);
         btnProceedToResult.setOnClickListener(this);
-    }
-
-    private void fakeData() {
-        tourOfferList.add(new TourOffer(1, "Winter beach escape 30% off"));
-        tourOfferList.add(new TourOffer(1, "Winter beach escape 30% off"));
-        tourOfferList.add(new TourOffer(1, "Winter beach escape 30% off"));
-        tourOfferList.add(new TourOffer(1, "Winter beach escape 30% off"));
-        tourOfferList.add(new TourOffer(1, "Winter beach escape 30% off"));
-        tourOfferList.add(new TourOffer(1, "Winter beach escape 30% off"));
-        tourOfferAdapter = new TourOfferAdapter(tourOfferList, getActivity());
-        rvTourOffer.setAdapter(tourOfferAdapter);
-        rvTopDestinations.setAdapter(tourOfferAdapter);
     }
 
     private void init(View view) {
@@ -102,5 +102,16 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(getContext(),"Searching...",Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    @Override
+    public void getListSaleTourSuccess(DataTourList dataTourList) {
+        tourOfferAdapter = new TourOfferAdapter(dataTourList.getTour(), getActivity());
+        rvTourOffer.setAdapter(tourOfferAdapter);
+    }
+
+    @Override
+    public void getListSaleTourFailure() {
+
     }
 }
