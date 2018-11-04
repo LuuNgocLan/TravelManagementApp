@@ -6,6 +6,7 @@ import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
 import luungoclan.min.traveltourmanagement.models.login.LoginResponse;
 import luungoclan.min.traveltourmanagement.views.login.ILoginActivity;
+import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,7 +16,6 @@ public class LoginPresenter implements ILoginPresenter {
 
     public final String TAG = "LOGIN_PRESENTER";
     private ILoginActivity iLoginActivity;
-    public static String token = null;
 
     public LoginPresenter(ILoginActivity iLoginActivity) {
         this.iLoginActivity = iLoginActivity;
@@ -41,7 +41,7 @@ public class LoginPresenter implements ILoginPresenter {
                     }
                     if (response.body().getResultCode() == 200) {
                         //Save token
-                        token = response.body().getData();
+                        MainActivity.token = response.body().getData();
                         iLoginActivity.getTokenSuccess(response.body().getData());
                     }
                 }

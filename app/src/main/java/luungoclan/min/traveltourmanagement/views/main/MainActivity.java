@@ -1,5 +1,10 @@
 package luungoclan.min.traveltourmanagement.views.main;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +12,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.ViewPagerAdapter;
 import luungoclan.min.traveltourmanagement.models.tourList.DataTourList;
+import luungoclan.min.traveltourmanagement.utils.Constants;
 import luungoclan.min.traveltourmanagement.views.publicTour.IPublicTourFragment;
 
-public class MainActivity extends AppCompatActivity implements IPublicTourFragment {
+public class MainActivity extends AppCompatActivity {
+    public static String token = null;
+    public static boolean isLoggingIn = false;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
@@ -22,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements IPublicTourFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.PREF_REMEMBER_ME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.IS_LOGGING_IN, isLoggingIn);
+        editor.commit();
         addControls();
     }
 
@@ -29,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements IPublicTourFragme
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(viewPagerAdapter);
 
         final TabLayout.Tab toursTab = tabLayout.newTab();
@@ -117,13 +130,4 @@ public class MainActivity extends AppCompatActivity implements IPublicTourFragme
 
     }
 
-    @Override
-    public void getListSaleTourSuccess(DataTourList dataTourList) {
-
-    }
-
-    @Override
-    public void getListSaleTourFailure() {
-
-    }
 }

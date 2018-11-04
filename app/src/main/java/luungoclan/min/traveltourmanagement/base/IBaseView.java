@@ -7,6 +7,6 @@ import android.content.Context;
  */
 public interface IBaseView {
     Context getContext();
-    void onShowProgressDialog();
+    void onShowProgressDialog(String msg);
     void onDismissProgressDialog();
 }

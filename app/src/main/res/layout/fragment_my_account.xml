@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".views.myAccount.MyAccountFragment">
 
@@ -14,14 +15,43 @@
             android:id="@+id/imv_background"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_slide"
-            android:background="@color/colorAccent" />
+            android:background="@drawable/img_1" />
 
-        <!--<de.hdodenhof.circleimageview.CircleImageView-->
-        <!--android:id="@+id/imv_avatar"-->
-        <!--android:layout_width="@dimen/size_avatar"-->
-        <!--android:layout_height="@dimen/size_avatar"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:src="@drawable/img_avatar" />-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imv_avatar"
+            android:layout_width="@dimen/image_avatar_size"
+            android:layout_height="@dimen/image_avatar_size"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            app:civ_border_color="@color/color_white"
+            app:civ_border_width="1dp"
+            android:src="@drawable/img_2" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true">
+
+            <Button
+                android:id="@+id/btn_signUp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_button"
+                android:text="@string/button_register"
+                android:textColor="@color/color_white"
+                android:background="@drawable/shape_button_sign_up"/>
+
+            <Button
+                android:id="@+id/btn_signIn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_button"
+                android:text="@string/button_login"
+                android:layout_marginLeft="@dimen/text_padding"
+                android:layout_marginRight="@dimen/text_padding"
+                android:background="@drawable/shape_button_sign_in"
+                android:textColor="@color/color_white"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout

@@ -31,7 +31,8 @@
             android:id="@+id/rv_tour_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding">
+            android:paddingLeft="@dimen/text_padding"
+            android:paddingRight="@dimen/text_padding">
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
@@ -48,6 +49,6 @@
         android:padding="@dimen/text_padding"
         android:textStyle="bold"
         android:background="@color/color_gray"/>
-    <include layout="@layout/form_review" />
+<include layout="@layout/form_review" />
 
 </LinearLayout>

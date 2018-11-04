@@ -1,5 +1,6 @@
 package luungoclan.min.traveltourmanagement.adapters;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,13 +9,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import luungoclan.min.traveltourmanagement.views.places.PlacesFragment;
 import luungoclan.min.traveltourmanagement.views.myAccount.MyAccountFragment;
 import luungoclan.min.traveltourmanagement.views.publicTour.PublicTourFragment;
-import luungoclan.min.traveltourmanagement.views.tours.ToursFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private static int NUM_ITEMS = 3;
+    private Context context;
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
 
     @Override
