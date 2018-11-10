@@ -15,6 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.tourAdapter.TourOfferAdapter;
 import luungoclan.min.traveltourmanagement.models.fakes.TourOffer;
@@ -24,7 +26,7 @@ import luungoclan.min.traveltourmanagement.presenters.main.PublicTourPresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PublicTourFragment extends Fragment implements View.OnClickListener,IPublicTourFragment {
+public class PublicTourFragment extends Fragment implements View.OnClickListener, IPublicTourFragment {
 
     private Button btnWhere, btnWhen, btnProceedToResult;
     private LinearLayout llSearchWhere, llSearchWhen;
@@ -34,6 +36,10 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     private RecyclerView rvTopDestinations;
     public boolean isShowWhereSearch = true, isShowWhenSearch = true;
     private PublicTourPresenter publicTourPresenter;
+    @BindView(R.id.layout_sale_tour_placeholder)
+    LinearLayout layoutSaleTourPlaceholder;
+    @BindView(R.id.layout_latest_tour_placeholder)
+    LinearLayout layoutLatestTourPlaceholder;
 
     public PublicTourFragment() {
     }
@@ -43,6 +49,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_public_tour, container, false);
+        ButterKnife.bind(this, view);
         initPresenter();
         init(view);
         loadData();
@@ -81,7 +88,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_when:
-                Toast.makeText(getContext(),isShowWhenSearch+"",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), isShowWhenSearch + "", Toast.LENGTH_SHORT).show();
                 if (isShowWhenSearch) {
                     llSearchWhen.setVisibility(View.VISIBLE);
                 } else {
@@ -90,7 +97,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
                 isShowWhenSearch = !isShowWhenSearch;
                 break;
             case R.id.btn_where:
-                Toast.makeText(getContext(),isShowWhereSearch+"",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), isShowWhereSearch + "", Toast.LENGTH_SHORT).show();
                 if (isShowWhereSearch) {
                     llSearchWhere.setVisibility(View.VISIBLE);
                 } else {
@@ -99,7 +106,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
                 isShowWhereSearch = !isShowWhereSearch;
                 break;
             case R.id.btn_proceedToResult:
-                Toast.makeText(getContext(),"Searching...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Searching...", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -108,6 +115,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     public void getListSaleTourSuccess(DataTourList dataTourList) {
         tourOfferAdapter = new TourOfferAdapter(dataTourList.getTour(), getActivity());
         rvTourOffer.setAdapter(tourOfferAdapter);
+        layoutSaleTourPlaceholder.setVisibility(View.GONE);
     }
 
     @Override

@@ -172,6 +172,18 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
+                <LinearLayout
+                    android:id="@+id/layout_sale_tour_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+                </LinearLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_latestOffers"
                     android:layout_width="match_parent"
@@ -190,6 +202,18 @@
                     android:text="@string/top_destination"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layout_latest_tour_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+                </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_topDestinations"

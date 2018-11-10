@@ -1,26 +1,18 @@
 package luungoclan.min.traveltourmanagement.adapters.reviewAdapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import luungoclan.min.traveltourmanagement.R;
-import luungoclan.min.traveltourmanagement.adapters.ItemClickListener;
 import luungoclan.min.traveltourmanagement.models.common.review.Review;
-import luungoclan.min.traveltourmanagement.models.tourList.Tour;
-import luungoclan.min.traveltourmanagement.utils.Common;
-import luungoclan.min.traveltourmanagement.views.detailTour.DetailTourActivity;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHolder> {
     private List<Review> reviewList;

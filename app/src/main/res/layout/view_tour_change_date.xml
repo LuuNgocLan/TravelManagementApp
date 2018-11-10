@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -21,7 +20,8 @@
             android:id="@+id/rv_tourChangeDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"/>
+            android:paddingTop="@dimen/text_padding"
+            android:paddingBottom="@dimen/text_padding"/>
 
     </LinearLayout>
 </LinearLayout>

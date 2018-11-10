@@ -80,4 +80,10 @@
     <string name="menu_logout">Log out</string>
     <string name="button_register">Sign up</string>
     <string name="button_login">Sign in</string>
+    <string name="item_tour_departure">Departure: </string>
+    <string name="item_tour_adult_s_price">Adult\'s Price</string>
+    <string name="currency_unit">VNĐ</string>
+    <string name="button_detail">Detail</string>
+    <string name="item_tour_remaining_slots">Remaining slots:</string>
+    <string name="infor_null">--</string>
 </resources>

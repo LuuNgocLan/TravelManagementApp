@@ -36,9 +36,9 @@ public class DataDetailTour {
     @SerializedName("note")
     @Expose
     private String note;
-    @SerializedName("deleted_at")
+    @SerializedName("type_tour")
     @Expose
-    private Integer deletedAt;
+    private String typeTour;
     @SerializedName("detail")
     @Expose
     private Detail detail;
@@ -50,7 +50,7 @@ public class DataDetailTour {
     private Guide guide;
     @SerializedName("hotel")
     @Expose
-    private List<Object> hotel = null;
+    private List<Hotel> hotel = null;
 
     public Integer getId() {
         return id;
@@ -132,12 +132,12 @@ public class DataDetailTour {
         this.note = note;
     }
 
-    public Integer getDeletedAt() {
-        return deletedAt;
+    public String getTypeTour() {
+        return typeTour;
     }
 
-    public void setDeletedAt(Integer deletedAt) {
-        this.deletedAt = deletedAt;
+    public void setTypeTour(String typeTour) {
+        this.typeTour = typeTour;
     }
 
     public Detail getDetail() {
@@ -164,11 +164,11 @@ public class DataDetailTour {
         this.guide = guide;
     }
 
-    public List<Object> getHotel() {
+    public List<Hotel> getHotel() {
         return hotel;
     }
 
-    public void setHotel(List<Object> hotel) {
+    public void setHotel(List<Hotel> hotel) {
         this.hotel = hotel;
     }
 

@@ -26,7 +26,7 @@ public class ValidateData {
         if (password == null) {
             return false;
         } else {
-            if (password.length() < Constants.LENGTH_PASSWORD_MIN) {
+            if (password.length() < Common.LENGTH_PASSWORD_MIN) {
                 return false;
             }
         }

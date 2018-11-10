@@ -13,15 +13,23 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.reviewAdapter.ReviewAdapter;
+import luungoclan.min.traveltourmanagement.adapters.tourAdapter.TourAdapter;
+import luungoclan.min.traveltourmanagement.base.BaseActivity;
 import luungoclan.min.traveltourmanagement.models.detailTour.DataDetailTour;
+import luungoclan.min.traveltourmanagement.models.detailTour.DataTour;
+import luungoclan.min.traveltourmanagement.models.detailTour.Detail;
 import luungoclan.min.traveltourmanagement.models.reviewOfTour.DataReview;
 import luungoclan.min.traveltourmanagement.presenters.detailTour.DetailTourPresenter;
+import luungoclan.min.traveltourmanagement.utils.Common;
+import luungoclan.min.traveltourmanagement.utils.ViewDataUtils;
 
-public class DetailTourActivity extends AppCompatActivity implements View.OnClickListener, IDetailTourActivity {
+public class DetailTourActivity extends BaseActivity implements View.OnClickListener, IDetailTourActivity {
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -36,20 +44,32 @@ public class DetailTourActivity extends AppCompatActivity implements View.OnClic
     private TextView tvMsgNoReview;
     private RecyclerView rvReviews;
     private ReviewAdapter reviewAdapter;
+    private int id_tour = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tour);
         ButterKnife.bind(this);
+        getDataFromIntent() ;
         init();
         setEvent();
         getDataDetailTour();
     }
 
+    private void getDataFromIntent() {
+        id_tour = getIntent().getIntExtra(Common.ID_TOUR,-1);
+    }
+
     private void getDataDetailTour() {
-        detailTourPresenter.getDetailTour(1);
-        detailTourPresenter.getListReviewOfTour(2);
+        if(id_tour>0) {
+            detailTourPresenter.getDetailTour(id_tour);
+            detailTourPresenter.getListReviewOfTour(id_tour);
+            detailTourPresenter.getListTourChangeDate(id_tour);
+        } else
+        {
+            onShowProgressDialog("Error");
+        }
     }
 
     private void setEvent() {
@@ -146,13 +166,19 @@ public class DetailTourActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void getDetailTourSuccess(DataDetailTour dataDetailTour) {
-        tvDetailTourName.setText(dataDetailTour.getName());
-        tvDetailTourDateDeparture.setText(dataDetailTour.getDetail().getDateDepart().toString());
-        tvDetailTourSlot.setText(dataDetailTour.getDetail().getSlot().toString());
-        tvDetailTourGatheringPlace.setText(dataDetailTour.getDetail().getAddressDepart());
-        tvDetailTourProgram.setText(dataDetailTour.getPrograms());
-        tvGuiderName.setText(dataDetailTour.getGuide().getName());
-        tvPriceAdult.setText(dataDetailTour.getDetail().getPriceAdults() + "VNĐ");
+        if (dataDetailTour != null) {
+            ViewDataUtils.setDataToView(tvDetailTourProgram, dataDetailTour.getPrograms());
+            ViewDataUtils.setDataToView(tvDetailTourName, dataDetailTour.getName());
+            if (dataDetailTour.getDetail() != null) {
+                ViewDataUtils.setDataToView(tvDetailTourDateDeparture, dataDetailTour.getDetail().getDateDepart());
+                ViewDataUtils.setDataToView(tvDetailTourSlot, dataDetailTour.getDetail().getSlot().toString());
+                ViewDataUtils.setDataToView(tvDetailTourGatheringPlace, dataDetailTour.getDetail().getAddressDepart());
+                ViewDataUtils.setDataToView(tvPriceAdult, dataDetailTour.getDetail().getPriceAdults() + "VNĐ");
+            }
+            if (dataDetailTour.getGuide() != null) {
+                ViewDataUtils.setDataToView(tvGuiderName, dataDetailTour.getGuide().getName());
+            }
+        }
     }
 
     @Override
@@ -174,6 +200,19 @@ public class DetailTourActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void getListReviewOfTourFailure() {
+
+    }
+
+    @Override
+    public void getAnotherTourSuccess(List<DataTour> dataTour) {
+        RecyclerView rvTourChangeDay = viewChangeDate.findViewById(R.id.rv_tourChangeDate);
+        rvTourChangeDay.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        TourAdapter tourAdapter = new TourAdapter(dataTour,this);
+        rvTourChangeDay.setAdapter(tourAdapter);
+    }
+
+    @Override
+    public void getAnotherTourFailure() {
 
     }
 }
