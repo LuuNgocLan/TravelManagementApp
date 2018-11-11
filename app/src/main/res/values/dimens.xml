@@ -19,4 +19,5 @@
     <dimen name="width_bookmark">48dp</dimen>
     <dimen name="height_bookmark">56dp</dimen>
     <dimen name="width_background_label">210dp</dimen>
+    <dimen name="image_avatar_size">68dp</dimen>
 </resources>

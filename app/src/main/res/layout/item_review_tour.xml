@@ -2,78 +2,86 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/item_padding"
+    android:layout_marginTop="@dimen/item_margin"
     android:background="@color/color_white"
-    android:layout_margin="@dimen/item_margin">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imv_tourOffer"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/img_2"
-        android:padding="@dimen/item_padding"/>
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imv_avatar"
+            android:layout_width="@dimen/image_avatar_size"
+            android:layout_height="@dimen/image_avatar_size"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/item_padding"
+            android:src="@drawable/img_avatar" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_name_item_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imv_tourOffer"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="Min"
-                android:textStyle="bold" />
-
-            <RatingBar
-                android:id="@+id/rb_tour"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:rating="1.0"
-                android:stepSize="1.0" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_date_item_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imv_tourOffer"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="16/12/2017" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" - "/>
-
-            <TextView
-                android:id="@+id/tv_time_item_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imv_tourOffer"
-                android:text="7:05 am" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_content_item_review"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imv_tourOffer"
-            android:paddingLeft="@dimen/text_padding"
-            android:text="That's amazing tour!" />
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_name_item_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imv_tourOffer"
+                    android:paddingLeft="@dimen/text_padding"
+                    android:text="Min"
+                    android:textStyle="bold" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialRatingBar.RatingBar.Indicator.Small"
+                    android:numStars="5"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:rating="1.0"
+                    android:stepSize="1.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_date_item_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imv_tourOffer"
+                    android:paddingLeft="@dimen/text_padding" />
+
+                <TextView
+                    android:id="@+id/tv_time_item_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imv_tourOffer" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_content_item_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imv_tourOffer"
+                android:paddingLeft="@dimen/text_padding"
+                android:text="That's amazing tour!" />
+        </LinearLayout>
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/item_padding"
+        android:background="@color/color_gray" />
 
 </LinearLayout>

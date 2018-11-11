@@ -11,6 +11,7 @@ import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
 import luungoclan.min.traveltourmanagement.presenters.login.LoginPresenter;
 import luungoclan.min.traveltourmanagement.presenters.myProfile.MyProfilePresenter;
+import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 
 public class MyProfileActivity extends AppCompatActivity implements IMyProfileActivity {
     private Toolbar toolbar;
@@ -28,7 +29,7 @@ public class MyProfileActivity extends AppCompatActivity implements IMyProfileAc
 
     private void getProfile() {
 
-        String token = LoginPresenter.token;
+        String token = MainActivity.token;
         if (token != null) {
             myProfilePresenter.getMyProfile(token);
         } else {

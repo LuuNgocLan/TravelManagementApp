@@ -5,8 +5,10 @@ import android.util.Log;
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
 import luungoclan.min.traveltourmanagement.models.login.LoginResponse;
+import luungoclan.min.traveltourmanagement.models.logout.LogoutResponse;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfileResponse;
 import luungoclan.min.traveltourmanagement.views.myProfile.IMyProfileActivity;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,4 +44,5 @@ public class MyProfilePresenter implements IMyProfilePresenter {
         });
 
     }
+
 }

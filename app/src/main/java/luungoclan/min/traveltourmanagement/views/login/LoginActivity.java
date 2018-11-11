@@ -1,13 +1,14 @@
 package luungoclan.min.traveltourmanagement.views.login;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,9 +22,11 @@ import org.json.JSONObject;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.presenters.login.LoginPresenter;
 import luungoclan.min.traveltourmanagement.utils.Common;
-import luungoclan.min.traveltourmanagement.utils.ValidateData;
+import luungoclan.min.traveltourmanagement.utils.Constants;
 import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 import okhttp3.RequestBody;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class LoginActivity extends AppCompatActivity implements ILoginActivity, View.OnClickListener {
 
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     private String username, password;
     private SharedPreferences sharedPreferences;
     private CheckBox cbRemember;
+    private boolean isLoggingIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
         cbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(cbRemember.isChecked()){
+                if (cbRemember.isChecked()) {
                     saveInforLoginInSharedPreference(false);
                 }
             }
@@ -59,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     }
 
     private void init() {
-        sharedPreferences = getSharedPreferences("rememberMe", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(Constants.PREF_REMEMBER_ME, MODE_PRIVATE);
         loginPresenter = new LoginPresenter(this);
         tvErrorSomethingWrong = findViewById(R.id.tv_error_SomethingWrong);
         edtUsername = findViewById(R.id.edt_email);
@@ -76,15 +80,17 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     @Override
     public void getTokenSuccess(String token) {
         progressDialog.dismiss();
-        Toast.makeText(this, token, Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), token, Toast.LENGTH_LONG).show();
         saveInforLoginInSharedPreference(true);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        MainActivity.isLoggingIn = true;
+        finish();
     }
 
     @Override
     public void getTokenFailure_ServerError() {
         progressDialog.dismiss();
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -101,11 +107,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
                 if (checkValidFieldUsernameAndPassword()) {
                     passDataLoginToJson();
                     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-                    if(Common.isConnected(getBaseContext())){
+                    if (Common.isConnected(getBaseContext())) {
                         loginPresenter.getToken(body);
                         showProgressDialog(getString(R.string.message_logging_in));
                     } else {
-                       showProgressDialog("No internet!");
+                        showProgressDialog("No internet!");
                     }
 
                 } else {
@@ -156,9 +162,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     }
 
     private void loadSharedPreferences() {
-        String email = sharedPreferences.getString("username", null);
-        String pass = sharedPreferences.getString("password", null);
-        boolean isRemembered = sharedPreferences.getBoolean("remember", false);
+        String email = sharedPreferences.getString(Constants.USERNAME, null);
+        String pass = sharedPreferences.getString(Constants.PASSWORD, null);
+        boolean isRemembered = sharedPreferences.getBoolean(Constants.REMEMBER_ME, false);
         cbRemember.setChecked(isRemembered);
         if (isRemembered) {
             if (email != null) {
@@ -171,6 +177,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
         }
 
     }
+
     /**
      * save data:  into shared preference to reuse
      *
@@ -178,14 +185,14 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
      */
     private void saveInforLoginInSharedPreference(boolean isLoggingIn) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggingIn", isLoggingIn);
+        editor.putBoolean(Constants.IS_LOGGING_IN, isLoggingIn);
         if (cbRemember.isChecked()) {
-            editor.putBoolean("remember", true);
+            editor.putBoolean(Constants.REMEMBER_ME, true);
         } else {
-            editor.putBoolean("remember", false);
+            editor.putBoolean(Constants.REMEMBER_ME, false);
         }
-        editor.putString("username", edtUsername.getText().toString());
-        editor.putString("password", edtPass.getText().toString());
+        editor.putString(Constants.USERNAME, edtUsername.getText().toString());
+        editor.putString(Constants.PASSWORD, edtPass.getText().toString());
         editor.commit();
     }
 

@@ -76,4 +76,8 @@
     <string name="review_form_rating_me">Rating me</string>
     <string name="tour_change_date_title">Tour in another date</string>
     <string name="tour_discount_percent">-10%</string>
+    <string name="menu_id_logout">id_logout</string>
+    <string name="menu_logout">Log out</string>
+    <string name="button_register">Sign up</string>
+    <string name="button_login">Sign in</string>
 </resources>
