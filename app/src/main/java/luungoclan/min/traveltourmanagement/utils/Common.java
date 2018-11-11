@@ -9,4 +9,6 @@ public class Common {
     public static final String PASSWORD = "Password";
     public static final String REMEMBER_ME = "RememberMe";
     public static final String ID_TOUR = "Id_tour";
+    public static final String ID_LOCATION = "Id_location";
+    public static final String NAME_LOCATION = "Name_location";
 }

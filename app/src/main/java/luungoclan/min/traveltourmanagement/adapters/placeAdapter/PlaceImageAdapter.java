@@ -1,8 +1,8 @@
 package luungoclan.min.traveltourmanagement.adapters.placeAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,6 +15,8 @@ import java.util.List;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.models.places.Place;
+import luungoclan.min.traveltourmanagement.utils.Common;
+import luungoclan.min.traveltourmanagement.views.places.ListTourInPlaceActivity;
 
 public class PlaceImageAdapter extends BaseAdapter {
     private Context context;
@@ -40,9 +42,9 @@ public class PlaceImageAdapter extends BaseAdapter {
         return 0;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
-        LayoutInflater inflater = (LayoutInflater) context
+        final LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View gridView;
@@ -55,14 +57,16 @@ public class PlaceImageAdapter extends BaseAdapter {
             btnExplore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"HEHE",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "HEHE", Toast.LENGTH_SHORT).show();
                 }
             });
-            imvPlace.setOnHoverListener(new View.OnHoverListener() {
+            imvPlace.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onHover(View v, MotionEvent event) {
-                    btnExplore.setVisibility(View.VISIBLE);
-                    return true;
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ListTourInPlaceActivity.class);
+                    intent.putExtra(Common.ID_LOCATION, placeList.get(position).getId());
+                    intent.putExtra(Common.NAME_LOCATION, placeList.get(position).getName());
+                    context.startActivity(intent);
                 }
             });
             TextView tvNamePlace = gridView.findViewById(R.id.tv_namePlace);

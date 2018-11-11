@@ -86,4 +86,5 @@
     <string name="button_detail">Detail</string>
     <string name="item_tour_remaining_slots">Remaining slots:</string>
     <string name="infor_null">--</string>
+    <string name="msg_no_tour_in_this_place">No tour in this Place!</string>
 </resources>
