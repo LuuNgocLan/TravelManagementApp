@@ -1,6 +1,10 @@
 package luungoclan.min.traveltourmanagement.views.detailTour;
 
+import java.util.List;
+
 import luungoclan.min.traveltourmanagement.models.detailTour.DataDetailTour;
+import luungoclan.min.traveltourmanagement.models.detailTour.DataTour;
+import luungoclan.min.traveltourmanagement.models.detailTour.Detail;
 import luungoclan.min.traveltourmanagement.models.reviewOfTour.DataReview;
 
 public interface IDetailTourActivity {
@@ -12,4 +16,7 @@ public interface IDetailTourActivity {
 
     public void getListReviewOfTourFailure();
 
+    public void getAnotherTourSuccess(List<DataTour> dataTour);
+
+    public void getAnotherTourFailure();
 }

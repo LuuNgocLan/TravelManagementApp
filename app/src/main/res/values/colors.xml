@@ -15,4 +15,5 @@
     <color name="color_violet_1">#653bff</color>
     <color name="color_pastel">#f2f2f2</color>
     <color name="color_theme1">#ffdf02</color>
+    <color name="colorPlaceholder">#dddddd</color>
 </resources>

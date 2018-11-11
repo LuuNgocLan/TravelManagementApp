@@ -1,6 +1,7 @@
 package luungoclan.min.traveltourmanagement.api;
 
 import luungoclan.min.traveltourmanagement.models.detailTour.DetailTourResponse;
+import luungoclan.min.traveltourmanagement.models.detailTour.TourAnotherDayResponse;
 import luungoclan.min.traveltourmanagement.models.login.LoginResponse;
 import luungoclan.min.traveltourmanagement.models.logout.LogoutResponse;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfileResponse;
@@ -79,5 +80,14 @@ public interface ApiInterface {
      */
     @GET("api/review/tour/{id}")
     Call<ReviewOfTourResponse> getReviewOfTour(@Path(value = "id", encoded = true) int idTour);
+
+    /**
+     * get list Tour another day
+     *
+     * @param idTour
+     * @return
+     */
+    @GET("api/detail/other/{id}")
+    Call<TourAnotherDayResponse> getAnotherDayOfTour(@Path(value = "id", encoded = true) int idTour);
 
 }

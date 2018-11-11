@@ -3,6 +3,7 @@ package luungoclan.min.traveltourmanagement.presenters.detailTour;
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
 import luungoclan.min.traveltourmanagement.models.detailTour.DetailTourResponse;
+import luungoclan.min.traveltourmanagement.models.detailTour.TourAnotherDayResponse;
 import luungoclan.min.traveltourmanagement.models.reviewOfTour.ReviewOfTourResponse;
 import luungoclan.min.traveltourmanagement.views.detailTour.IDetailTourActivity;
 import retrofit2.Call;
@@ -54,6 +55,27 @@ public class DetailTourPresenter implements IDetailTourPresenter {
 
             @Override
             public void onFailure(Call<ReviewOfTourResponse> call, Throwable t) {
+                iDetailTourActivity.getListReviewOfTourFailure();
+            }
+        });
+    }
+
+    @Override
+    public void getListTourChangeDate(int idTour) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<TourAnotherDayResponse> call = apiService.getAnotherDayOfTour(idTour);
+        call.enqueue(new Callback<TourAnotherDayResponse>() {
+            @Override
+            public void onResponse(Call<TourAnotherDayResponse> call, Response<TourAnotherDayResponse> response) {
+                if (response.code() >= 300) {
+                    iDetailTourActivity.getDetailTourFailure();
+                } else if (response.code() == 200) {
+                    iDetailTourActivity.getAnotherTourSuccess(response.body().getDataTour());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TourAnotherDayResponse> call, Throwable t) {
                 iDetailTourActivity.getListReviewOfTourFailure();
             }
         });

@@ -1,7 +1,6 @@
 package luungoclan.min.traveltourmanagement.views.myAccount;
 
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,11 +28,10 @@ import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.models.menu.MenuModel;
 import luungoclan.min.traveltourmanagement.presenters.myAccount.MyAccountPresenter;
-import luungoclan.min.traveltourmanagement.utils.Constants;
+import luungoclan.min.traveltourmanagement.utils.Common;
 import luungoclan.min.traveltourmanagement.views.login.LoginActivity;
 import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 import luungoclan.min.traveltourmanagement.views.myProfile.MyProfileActivity;
-import luungoclan.min.traveltourmanagement.views.places.PlacesFragment;
 import okhttp3.RequestBody;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -69,8 +67,8 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_account, container, false);
         ButterKnife.bind(this, view);
-        sharedPreferences = getActivity().getSharedPreferences(Constants.PREF_REMEMBER_ME, MODE_PRIVATE);
-        isLoggingIn = sharedPreferences.getBoolean(Constants.IS_LOGGING_IN, false);
+        sharedPreferences = getActivity().getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
+        isLoggingIn = sharedPreferences.getBoolean(Common.IS_LOGGING_IN, false);
         myAccountPresenter = new MyAccountPresenter(this);
         checkDisplayView();
         createExpandlist();
@@ -81,10 +79,10 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
     @Override
     public void onResume() {
         super.onResume();
-        isLoggingIn = sharedPreferences.getBoolean(Constants.IS_LOGGING_IN, false);
-        checkDisplayView();
+        isLoggingIn = sharedPreferences.getBoolean(Common.IS_LOGGING_IN, false);
         //Delete all data headerList
         if (isLoggingIn()) {
+            checkDisplayView();
             headerList.clear();
             //create new menu when user logged in
             prepareMenuData();
@@ -164,12 +162,12 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
     }
 
     private void passDataLogoutToJson() {
-        String username = sharedPreferences.getString(Constants.USERNAME, "");
-        String password = sharedPreferences.getString(Constants.PASSWORD, "");
+        String username = sharedPreferences.getString(Common.USERNAME, "");
+        String password = sharedPreferences.getString(Common.PASSWORD, "");
         jsonObject = new JSONObject();
         try {
-            jsonObject.put(Constants.USERNAME, username);
-            jsonObject.put(Constants.PASSWORD, password);
+            jsonObject.put(Common.USERNAME, username);
+            jsonObject.put(Common.PASSWORD, password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -211,11 +209,11 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         MainActivity.token = null;
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(Constants.IS_LOGGING_IN, false);
+        editor.putBoolean(Common.IS_LOGGING_IN, false);
         editor.commit();
         headerList.clear();
         android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(new PlacesFragment()).commit();
+        ft.detach(this).attach(this).commit();
 
     }
 
