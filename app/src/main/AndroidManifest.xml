@@ -24,10 +24,11 @@
         </activity>
         <activity
             android:name=".views.login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.detailTour.DetailTourActivity" />
         <activity android:name=".views.myProfile.MyProfileActivity" />
-        <activity android:name=".views.intro.IntroActivity"></activity>
+        <activity android:name=".views.intro.IntroActivity" />
+        <activity android:name=".views.places.ListTourInPlaceActivity"></activity>
     </application>
 
 </manifest>

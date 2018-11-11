@@ -6,6 +6,7 @@ import luungoclan.min.traveltourmanagement.models.login.LoginResponse;
 import luungoclan.min.traveltourmanagement.models.logout.LogoutResponse;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfileResponse;
 import luungoclan.min.traveltourmanagement.models.places.PlaceResponse;
+import luungoclan.min.traveltourmanagement.models.places.tourInPlace.TourInPlaceResponse;
 import luungoclan.min.traveltourmanagement.models.reviewOfTour.ReviewOfTourResponse;
 import luungoclan.min.traveltourmanagement.models.tourList.TourListResponse;
 import okhttp3.RequestBody;
@@ -89,5 +90,14 @@ public interface ApiInterface {
      */
     @GET("api/detail/other/{id}")
     Call<TourAnotherDayResponse> getAnotherDayOfTour(@Path(value = "id", encoded = true) int idTour);
+
+    /**
+     * get list Tour ain place
+     *
+     * @param idPlace
+     * @return
+     */
+    @GET("api/tour/location/{idPlace}")
+    Call<TourInPlaceResponse> getTourInPlace(@Path(value = "idPlace", encoded = true) int idPlace);
 
 }
