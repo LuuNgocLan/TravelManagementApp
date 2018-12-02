@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_map"
     android:orientation="vertical"
     tools:context=".views.places.ListTourInPlaceActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <luungoclan.min.traveltourmanagement.ui.BaseHeaderBar
+        android:id="@+id/baseHeaderBar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@color/color_white"
-        android:theme="@style/ToolbarTheme">
+        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.Toolbar>
+    </luungoclan.min.traveltourmanagement.ui.BaseHeaderBar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_listTour"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"

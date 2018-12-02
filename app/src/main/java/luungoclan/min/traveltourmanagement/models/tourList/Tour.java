@@ -19,12 +19,12 @@ public class Tour {
     @SerializedName("discount")
     @Expose
     private Integer discount;
-    @SerializedName("booked")
-    @Expose
-    private Integer booked;
     @SerializedName("images")
     @Expose
     private String images;
+    @SerializedName("id_detail")
+    @Expose
+    private Integer idDetail;
     @SerializedName("date_depart")
     @Expose
     private String dateDepart;
@@ -40,44 +40,12 @@ public class Tour {
     @SerializedName("slot")
     @Expose
     private Integer slot;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Tour() {
-    }
-
-    /**
-     *
-     * @param id
-     * @param numberDays
-     * @param itemTour
-     * @param priceAdults
-     * @param dateDepart
-     * @param booked
-     * @param name
-     * @param priceChilds
-     * @param images
-     * @param slot
-     * @param timeDepart
-     * @param discount
-     */
-    public Tour(Integer id, String name, Integer numberDays, String itemTour, Integer discount, Integer booked, String images, String dateDepart, Integer priceAdults, Integer priceChilds, String timeDepart, Integer slot) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.numberDays = numberDays;
-        this.itemTour = itemTour;
-        this.discount = discount;
-        this.booked = booked;
-        this.images = images;
-        this.dateDepart = dateDepart;
-        this.priceAdults = priceAdults;
-        this.priceChilds = priceChilds;
-        this.timeDepart = timeDepart;
-        this.slot = slot;
-    }
+    @SerializedName("booked")
+    @Expose
+    private Integer booked;
+    @SerializedName("id_type_tour")
+    @Expose
+    private Integer idTypeTour;
 
     public Integer getId() {
         return id;
@@ -119,20 +87,20 @@ public class Tour {
         this.discount = discount;
     }
 
-    public Integer getBooked() {
-        return booked;
-    }
-
-    public void setBooked(Integer booked) {
-        this.booked = booked;
-    }
-
     public String getImages() {
         return images;
     }
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public Integer getIdDetail() {
+        return idDetail;
+    }
+
+    public void setIdDetail(Integer idDetail) {
+        this.idDetail = idDetail;
     }
 
     public String getDateDepart() {
@@ -173,5 +141,21 @@ public class Tour {
 
     public void setSlot(Integer slot) {
         this.slot = slot;
+    }
+
+    public Integer getBooked() {
+        return booked;
+    }
+
+    public void setBooked(Integer booked) {
+        this.booked = booked;
+    }
+
+    public Integer getIdTypeTour() {
+        return idTypeTour;
+    }
+
+    public void setIdTypeTour(Integer idTypeTour) {
+        this.idTypeTour = idTypeTour;
     }
 }

@@ -1,6 +1,7 @@
 package luungoclan.min.traveltourmanagement.views.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,15 +14,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import luungoclan.min.traveltourmanagement.R;
+import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
 import luungoclan.min.traveltourmanagement.presenters.login.LoginPresenter;
+import luungoclan.min.traveltourmanagement.presenters.myProfile.IMyProfileImpl;
+import luungoclan.min.traveltourmanagement.presenters.myProfile.MyProfileImpl;
 import luungoclan.min.traveltourmanagement.utils.Utils;
 import luungoclan.min.traveltourmanagement.utils.Common;
-import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 import okhttp3.RequestBody;
+
+import static luungoclan.min.traveltourmanagement.utils.Common.RESULT_LOGIN_SUCCESS;
 
 public class LoginActivity extends AppCompatActivity implements ILoginActivity, View.OnClickListener {
 
@@ -33,8 +40,10 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     private ProgressDialog progressDialog;
     private String username, password;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private CheckBox cbRemember;
     private boolean isLoggingIn;
+    private IMyProfileImpl iMyProfileImpl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
 
     private void init() {
         sharedPreferences = getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         loginPresenter = new LoginPresenter(this);
         tvErrorSomethingWrong = findViewById(R.id.tv_error_SomethingWrong);
         edtUsername = findViewById(R.id.edt_email);
@@ -74,11 +84,18 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
 
     @Override
     public void getTokenSuccess(String token) {
-        progressDialog.dismiss();
         Toast.makeText(getBaseContext(), token, Toast.LENGTH_LONG).show();
         saveInforLoginInSharedPreference(true);
-        MainActivity.isLoggingIn = true;
-        finish();
+        //save token to sharedPreference
+        editor.putString(Common.TOKEN_SAVED, token);
+        getProfileFromServer(token);
+        editor.commit();
+        setResult(RESULT_LOGIN_SUCCESS);
+    }
+
+    public void getProfileFromServer(String token) {
+        iMyProfileImpl = new MyProfileImpl(this);
+        iMyProfileImpl.onGetProfile(token);
     }
 
     @Override
@@ -92,6 +109,23 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     public void getTokenFailure_WrongData() {
         progressDialog.dismiss();
         tvErrorSomethingWrong.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void getProfileSuccess(MyProfile myProfile) {
+        progressDialog.dismiss();
+        if (myProfile != null) {
+            Gson gson = new Gson();
+            String myProfileJson = gson.toJson(myProfile);
+            editor.putString(Common.MYPROFILE, myProfileJson);
+            editor.commit();
+        }
+        finish();
+    }
+
+    @Override
+    public void getProfileFailure() {
 
     }
 
@@ -179,7 +213,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
      * @param isLoggingIn
      */
     private void saveInforLoginInSharedPreference(boolean isLoggingIn) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(Common.IS_LOGGING_IN, isLoggingIn);
         if (cbRemember.isChecked()) {
             editor.putBoolean(Common.REMEMBER_ME, true);
@@ -191,4 +224,18 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
         editor.commit();
     }
 
+    @Override
+    public Context getContext() {
+        return null;
+    }
+
+    @Override
+    public void onShowProgressDialog(String msg) {
+
+    }
+
+    @Override
+    public void onDismissProgressDialog() {
+
+    }
 }

@@ -12,7 +12,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+import java.util.Random;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.ItemClickListener;
@@ -22,23 +25,35 @@ import luungoclan.min.traveltourmanagement.views.detailTour.DetailTourActivity;
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.MyViewHolder> {
     private List<DataTour> tourList;
     private Context context;
+    private int idItemLayout;
 
-    public TourAdapter(List<DataTour> tourList, Context context) {
+    int[] images = {R.drawable.img_1, R.drawable.img_2, R.drawable.img_3,
+            R.drawable.img_4, R.drawable.img_5, R.drawable.img_6,
+            R.drawable.img_7, R.drawable.img_8, R.drawable.img_9};
+
+    public TourAdapter(List<DataTour> tourList, Context context, int idItemLayout) {
         this.tourList = tourList;
         this.context = context;
+        this.idItemLayout = idItemLayout;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tour_vertical, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(idItemLayout, parent, false);
         return new TourAdapter.MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final DataTour detail = tourList.get(position);
-        holder.tvSlotRemain.setText(detail.getSlot()+"");
-        holder.tvItemPrice.setText(detail.getPriceAdults() +"");
+        Random rand = new Random();
+        int num = rand.nextInt(9);
+        Glide.with(context).
+                load(images[num]).
+                into(holder.imvTour);
+
+        holder.tvSlotRemain.setText(detail.getSlot() + "");
+        holder.tvItemPrice.setText(detail.getPriceAdults() + "");
         holder.tvDayDeparture.setText(detail.getDateDepart());
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
