@@ -25,32 +25,12 @@ public class MyProfile {
     @SerializedName("address")
     @Expose
     private String address;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public MyProfile() {
-    }
-
-    /**
-     * @param id
-     * @param phone
-     * @param username
-     * @param address
-     * @param email
-     * @param active
-     * @param fullname
-     */
-    public MyProfile(Integer id, String username, Integer active, String fullname, String email, String phone, String address) {
-        super();
-        this.id = id;
-        this.username = username;
-        this.active = active;
-        this.fullname = fullname;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-    }
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+    @SerializedName("id_group")
+    @Expose
+    private Integer idGroup;
 
     public Integer getId() {
         return id;
@@ -106,6 +86,22 @@ public class MyProfile {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Integer getIdGroup() {
+        return idGroup;
+    }
+
+    public void setIdGroup(Integer idGroup) {
+        this.idGroup = idGroup;
     }
 
 }

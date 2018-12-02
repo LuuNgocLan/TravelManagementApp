@@ -13,6 +13,7 @@ import luungoclan.min.traveltourmanagement.views.publicTour.PublicTourFragment;
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private static int NUM_ITEMS = 3;
     private Context context;
+    private String[] mTitles = {"Tours", "Places", "Account"};
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -35,17 +36,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-
-        switch (position) {
-            case 0:
-                return "Tours";
-            case 1:
-                return "Places";
-            case 2:
-                return "MyAccount";
-            default:
-                return "";
-        }
+        return mTitles[position];
     }
 
     @Override

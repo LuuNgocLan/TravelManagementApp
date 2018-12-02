@@ -6,15 +6,37 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_splash"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".views.splash.SplashActivity"
-    >
+    tools:context=".views.splash.SplashActivity">
 
     <ImageView
-        android:layout_width="match_parent"
+        android:id="@+id/logo"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="165dp"
+        android:src="@mipmap/ic_logo_launcher_foreground" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:src="@drawable/img_slogan" />
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="GO TRAVEL"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="GO TRAVEL"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
 
 </RelativeLayout>

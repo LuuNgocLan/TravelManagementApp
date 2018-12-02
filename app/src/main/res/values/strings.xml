@@ -1,20 +1,21 @@
 <resources>
-    <string name="app_name">TravelTourManagement</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="app_name">GoTravel</string>
+    <string name="title_activity_login" translatable="false">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="hint_email">Email</string>
-    <string name="hint_pass">Password</string>
-    <string name="error_email_or_password_is_wrong">Email or password is wrong!</string>
-    <string name="checkbox_text_remember">Remember me</string>
-    <string name="button_text_login">Sign in</string>
+    <string name="hint_email" translatable="false">Email</string>
+    <string name="hint_username" translatable="false">Username</string>
+    <string name="hint_pass" translatable="false">Password</string>
+    <string name="error_email_or_password_is_wrong" translatable="false">Email or password is wrong!</string>
+    <string name="checkbox_text_remember" translatable="false">Remember me</string>
+    <string name="button_text_login" translatable="false">LOGIN </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tab_name_tour">Tours</string>
-    <string name="tab_name_myaccount">Account</string>
-    <string name="tab_name_places">Places</string>
-    <string name="tab_name_tours">Tours</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="tab_name_tour" translatable="false">Tours</string>
+    <string name="tab_name_myaccount" translatable="false">Account</string>
+    <string name="tab_name_places" translatable="false">Places</string>
+    <string name="tab_name_tours" translatable="false">Tours</string>
     <string name="explore_our_latest_offers">Explore our latest offer</string>
     <string name="top_destination">Top destinations around the world</string>
     <string name="button_text_explore">Explore</string>
@@ -28,14 +29,14 @@
     <string name="profile_last_name">Last name:</string>
     <string name="profile_email">Email:</string>
     <string name="profile_phone">Phone:</string>
-    <string name="profile_city">City:</string>
-    <string name="profile_country">Country:</string>
-    <string name="search_01_where">01.Where?</string>
-    <string name="search_your_destination">Your destination</string>
-    <string name="search_02_when">02.When?</string>
-    <string name="search_check_in_date">Check in date</string>
-    <string name="button_proceed_to_results">Proceed to results</string>
-    <string name="search_check_out_date">Check out date</string>
+    <string name="profile_city" translatable="false">City:</string>
+    <string name="profile_country" translatable="false">Country:</string>
+    <string name="search_01_where" translatable="false">01.Where?</string>
+    <string name="search_your_destination" translatable="false">Your destination</string>
+    <string name="search_02_when" translatable="false">02.When?</string>
+    <string name="search_check_in_date" translatable="false">Check in date</string>
+    <string name="button_proceed_to_results" translatable="false">Proceed to results</string>
+    <string name="search_check_out_date" translatable="false">Check out date</string>
     <string name="tour_detail_description">Description</string>
     <string name="tour_detail_programs">Programs</string>
     <string name="tour_detail_reviews">Reviews</string>
@@ -87,4 +88,9 @@
     <string name="item_tour_remaining_slots">Remaining slots:</string>
     <string name="infor_null">--</string>
     <string name="msg_no_tour_in_this_place">No tour in this Place!</string>
+    <string name="msg_no_review">No Review!</string>
+    <string name="text_change_password_title">Change Password</string>
+    <string name="action_book_now">Book Now!</string>
+    <string name="action_send_review">Send</string>
+    <string name="action_change_pass">Change Password</string>
 </resources>

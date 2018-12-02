@@ -1,28 +1,28 @@
 package luungoclan.min.traveltourmanagement.views.places;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.tourAdapter.TourInPlaceAdapter;
 import luungoclan.min.traveltourmanagement.base.BaseActivity;
-import luungoclan.min.traveltourmanagement.models.places.tourInPlace.DataTour;
+import luungoclan.min.traveltourmanagement.models.tourList.tourInPlace.DataTour;
 import luungoclan.min.traveltourmanagement.presenters.places.ListTourInPlacePresenter;
+import luungoclan.min.traveltourmanagement.ui.BaseHeaderBar;
 import luungoclan.min.traveltourmanagement.utils.Common;
 
-public class ListTourInPlaceActivity extends BaseActivity implements IListTourInPlaceView {
+import static luungoclan.min.traveltourmanagement.ui.BaseHeaderBar.HeaderBarType.HEADER_BAR_DEFAULT;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class ListTourInPlaceActivity extends BaseActivity implements IListTourInPlaceView {
+    @BindView(R.id.baseHeaderBar)
+    BaseHeaderBar mBaseHeaderBar;
 
     @BindView(R.id.rv_listTour)
     RecyclerView rvTours;
@@ -44,12 +44,13 @@ public class ListTourInPlaceActivity extends BaseActivity implements IListTourIn
     }
 
     private void init() {
-        setSupportActionBar(toolbar);
+        mBaseHeaderBar.setHeaderBarStyle(HEADER_BAR_DEFAULT);
         namePlace = getIntent().getStringExtra(Common.NAME_LOCATION);
-        setTitle(namePlace);
-        //Display back home button
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mBaseHeaderBar.setTitleToolBar(namePlace);
+        mBaseHeaderBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_fall_down);
+        rvTours.setLayoutAnimation(animation);
         //get data idPlace from intent
         idPlace = getIntent().getIntExtra(Common.ID_LOCATION, -1);
         if (idPlace != -1) {
@@ -71,6 +72,7 @@ public class ListTourInPlaceActivity extends BaseActivity implements IListTourIn
             tvMsgNoTour.setVisibility(View.GONE);
         } else {
             tvMsgNoTour.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -78,15 +80,6 @@ public class ListTourInPlaceActivity extends BaseActivity implements IListTourIn
     @Override
     public void getListTourInPlaceFailure() {
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

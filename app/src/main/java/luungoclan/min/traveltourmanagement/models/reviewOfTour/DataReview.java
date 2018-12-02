@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import luungoclan.min.traveltourmanagement.models.common.review.Review;
-
 public class DataReview {
     @SerializedName("total")
     @Expose

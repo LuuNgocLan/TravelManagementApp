@@ -11,6 +11,7 @@
         android:layout_marginLeft="@dimen/item_padding"
         android:layout_marginRight="@dimen/item_padding"
         android:background="@drawable/img_2"
+        android:scaleType="centerCrop"
         android:paddingBottom="@dimen/item_padding" />
 
     <TextView
@@ -72,7 +73,7 @@
         android:layout_below="@+id/ll_infor"
         android:layout_marginLeft="@dimen/item_padding"
         android:background="@color/color_white"
-        android:padding="@dimen/item_padding">
+        android:padding="8dp">
 
         <Button
             android:id="@+id/btn_explore"

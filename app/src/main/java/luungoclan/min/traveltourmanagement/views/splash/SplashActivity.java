@@ -9,7 +9,7 @@ import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences mSharedPreferences;
     private boolean isLoggingIn;
     private String emailSaved, passwordSaved;
 

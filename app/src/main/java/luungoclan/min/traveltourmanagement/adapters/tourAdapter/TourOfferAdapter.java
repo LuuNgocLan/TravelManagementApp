@@ -12,7 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+import java.util.Random;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.ItemClickListener;
@@ -24,6 +27,9 @@ import luungoclan.min.traveltourmanagement.views.detailTour.DetailTourActivity;
 public class TourOfferAdapter extends RecyclerView.Adapter<TourOfferAdapter.MyViewHolder> {
     private List<Tour> tourOfferList;
     private Context context;
+    int[] images = {R.drawable.img_1, R.drawable.img_2, R.drawable.img_3,
+            R.drawable.img_4, R.drawable.img_5, R.drawable.img_6,
+            R.drawable.img_7, R.drawable.img_8, R.drawable.img_9};
 
     public TourOfferAdapter(List<Tour> tourOfferList, Context context) {
         this.tourOfferList = tourOfferList;
@@ -39,8 +45,19 @@ public class TourOfferAdapter extends RecyclerView.Adapter<TourOfferAdapter.MyVi
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Tour tourOffer = tourOfferList.get(position);
+        Random rand = new Random();
+        int num = rand.nextInt(9);
+        Glide.with(context).
+                load(images[num]).
+                into(holder.imvOffer);
+
         holder.tvTitleOffer.setText(Utils.cuttingString(tourOffer.getName()));
-        holder.tvTourDiscount.setText("-" + tourOffer.getDiscount() + "%");
+        if (tourOffer.getDiscount() < 2) {
+            holder.llInfor.setBackground(context.getResources().getDrawable(R.drawable.bg_label_basic));
+            holder.tvTourDiscount.setVisibility(View.GONE);
+        } else {
+            holder.tvTourDiscount.setText("-" + tourOffer.getDiscount() + "%");
+        }
         holder.tvTourCost.setText(tourOffer.getPriceAdults() + "VNĐ");
         holder.tvTourSlot.setText("Remain " + (tourOffer.getSlot() - tourOffer.getBooked()) + " slots");
         holder.btnExplore.setOnClickListener(new View.OnClickListener() {

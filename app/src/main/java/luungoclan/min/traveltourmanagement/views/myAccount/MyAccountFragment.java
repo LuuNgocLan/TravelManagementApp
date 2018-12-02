@@ -4,37 +4,48 @@ package luungoclan.min.traveltourmanagement.views.myAccount;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import luungoclan.min.traveltourmanagement.R;
-import luungoclan.min.traveltourmanagement.models.menu.MenuModel;
-import luungoclan.min.traveltourmanagement.presenters.myAccount.MyAccountPresenter;
+import luungoclan.min.traveltourmanagement.adapters.BasePagerAdapter;
+import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
+import luungoclan.min.traveltourmanagement.presenters.myAccount.ILogoutImpl;
+import luungoclan.min.traveltourmanagement.presenters.myAccount.LogoutImpl;
+import luungoclan.min.traveltourmanagement.presenters.myProfile.IMyProfileImpl;
+import luungoclan.min.traveltourmanagement.ui.BaseHeaderBar;
 import luungoclan.min.traveltourmanagement.utils.Common;
 import luungoclan.min.traveltourmanagement.views.login.LoginActivity;
 import luungoclan.min.traveltourmanagement.views.main.MainActivity;
-import luungoclan.min.traveltourmanagement.views.myProfile.MyProfileActivity;
+import luungoclan.min.traveltourmanagement.views.myBooking.MyBookingFragment;
+import luungoclan.min.traveltourmanagement.views.myProfile.EditProfileActivity;
+import luungoclan.min.traveltourmanagement.views.myReview.MyReviewFragment;
 import okhttp3.RequestBody;
 
 import static android.content.Context.MODE_PRIVATE;
+import static luungoclan.min.traveltourmanagement.ui.BaseHeaderBar.HeaderBarType.HEADER_BAR_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,21 +53,41 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyAccountFragment extends Fragment implements IMyAccountFragment, View.OnClickListener {
     @BindView(R.id.imv_avatar)
     ImageView imvAvatar;
+
     @BindView(R.id.btn_signUp)
     Button btnSignUp;
     @BindView(R.id.btn_signIn)
     Button btnSignIn;
-    @BindView(R.id.expandableListView)
-    ExpandableListView expandableListView;
 
-    private ExpandableListAdapter expandableListAdapter;
-    List<MenuModel> headerList = new ArrayList<>();
-    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    @BindView(R.id.tv_name_user)
+    TextView tvName;
+
+    @BindView(R.id.tv_addr_user)
+    TextView tvAddr;
+
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+
+    @BindView(R.id.tabLayout)
+    TabLayout mTabLayout;
+
+    @BindView(R.id.toolbar)
+    BaseHeaderBar mToolbar;
+
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private MyBookingFragment myBookingFragment = new MyBookingFragment();
+    private MyReviewFragment myReviewFragment = new MyReviewFragment();
+    private BasePagerAdapter adapter;
+    private String[] titles = {"My Booking", "My Reviews"};
     private SharedPreferences sharedPreferences;
     private View view;
     private JSONObject jsonObject;
-    private MyAccountPresenter myAccountPresenter;
     private boolean isLoggingIn;
+    private MyProfile currentUser = null;
+    private IMyProfileImpl iMyProfileImpl;
+    private ILogoutImpl iLogoutImpl;
+    private String token;
+    private MenuItem logoutMenu;
 
     public MyAccountFragment() {
     }
@@ -67,98 +98,92 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_account, container, false);
         ButterKnife.bind(this, view);
+
         sharedPreferences = getActivity().getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
         isLoggingIn = sharedPreferences.getBoolean(Common.IS_LOGGING_IN, false);
-        myAccountPresenter = new MyAccountPresenter(this);
+        token = sharedPreferences.getString(Common.TOKEN_SAVED, null);
+
+        iLogoutImpl = new LogoutImpl(this);
+
+        initView();
+        initTabs();
         checkDisplayView();
-        createExpandlist();
-        prepareMenuData();
+
         return view;
     }
+
+    private void initView() {
+        mToolbar.setHeaderBarStyle(HEADER_BAR_ACCOUNT);
+        logoutMenu = mToolbar.getMenuItem();
+        logoutMenu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_logout) {
+                    Toast.makeText(getContext(), "Log out click!", Toast.LENGTH_SHORT).show();
+                    passDataLogoutToJson();
+                    RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+                    iLogoutImpl.logout(token, body);
+                }
+                return false;
+            }
+        });
+    }
+
+    public void initTabs() {
+        fragmentList.add(myBookingFragment);
+        fragmentList.add(myReviewFragment);
+
+        adapter = new BasePagerAdapter(getChildFragmentManager(), fragmentList, titles);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
+        Toast.makeText(getActivity(), "On resume", Toast.LENGTH_SHORT).show();
         isLoggingIn = sharedPreferences.getBoolean(Common.IS_LOGGING_IN, false);
-        //Delete all data headerList
-        if (isLoggingIn()) {
-            checkDisplayView();
-            headerList.clear();
-            //create new menu when user logged in
-            prepareMenuData();
+        checkDisplayView();
 
-        }
     }
 
+
     private void checkDisplayView() {
-        if (isLoggingIn()) {
+        if (isLoggingIn) {
+            logoutMenu.setVisible(true);
             btnSignIn.setVisibility(View.GONE);
             btnSignUp.setVisibility(View.GONE);
+            tvName.setVisibility(View.VISIBLE);
+            tvAddr.setVisibility(View.VISIBLE);
+            //get infor profile to display
+            Gson gson = new Gson();
+            String json = sharedPreferences.getString(Common.MYPROFILE, null);
+            currentUser = gson.fromJson(json, MyProfile.class);
+
+            if (currentUser != null) {
+                String urlAvatar = Common.BASE_URL + currentUser.getAvatar();
+                Glide.with(getContext())
+                        .load(urlAvatar)
+                        .placeholder(R.drawable.img_avatar)
+                        .error(R.drawable.img_avatar)
+                        .into(imvAvatar);
+                tvName.setText(currentUser.getUsername());
+                tvAddr.setText(currentUser.getAddress());
+            }
+            //send message to tab my reviews
+            myReviewFragment.getListReviewFromServer(token);
+
         } else {
+            logoutMenu.setVisible(false);
+            tvName.setVisibility(View.GONE);
+            tvAddr.setVisibility(View.GONE);
             btnSignUp.setOnClickListener(this);
             btnSignIn.setOnClickListener(this);
         }
-    }
-
-    private void createExpandlist() {
-        expandableListAdapter = new luungoclan.min.traveltourmanagement.adapters.ExpandableListAdapter(getContext(), headerList, childList);
-        expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-
-                if (headerList.get(groupPosition).isGroup) {
-                    if (!headerList.get(groupPosition).hasChildren) {
-                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_mybooking))) {
-                            if (isLoggingIn()) {
-                                Toast.makeText(getContext(), "My booking", Toast.LENGTH_SHORT).show();
-                            } else {
-                                createIntentSignin();
-                            }
-//                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
-//                            getSupportActionBar().setTitle(R.string.menu_overtime);
-                        }
-                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_myprofile))) {
-                            if (isLoggingIn()) {
-                                startActivity(new Intent(getActivity(), MyProfileActivity.class));
-                            } else {
-                                createIntentSignin();
-                            }
-//                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
-//                            getSupportActionBar().setTitle(R.string.menu_overtime);
-                        }
-                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_myreviews))) {
-                            if (isLoggingIn()) {
-                                Toast.makeText(getContext(), "My Reviews", Toast.LENGTH_SHORT).show();
-                            } else {
-                                createIntentSignin();
-                            }
-//                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
-//                            getSupportActionBar().setTitle(R.string.menu_overtime);
-                        }
-                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_logout))) {
-                            passDataLogoutToJson();
-                            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-                            myAccountPresenter.logout(MainActivity.token, body);
-                        }
-                    }
-                }
-                return false;
-            }
-        });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                if (childList.get(headerList.get(groupPosition)) != null) {
-                    MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
-                    Log.d("GROUP", model.menuName);
-                }
-                return false;
-            }
-        });
-
-
     }
 
     private void passDataLogoutToJson() {
@@ -173,35 +198,9 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
         }
     }
 
-    private void prepareMenuData() {
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_mybooking), getString(R.string.menu_mybooking), true, false, getResources().getDrawable(R.drawable.ic_booking));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(getString(R.string.menu_id_myreviews), getString(R.string.menu_myreviews), true, false, getResources().getDrawable(R.drawable.ic_review));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(getString(R.string.menu_id_myprofile), getString(R.string.menu_myprofile), true, false, getResources().getDrawable(R.drawable.ic_person));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(getString(R.string.menu_id_setting), getString(R.string.menu_setting), true, false, getResources().getDrawable(R.drawable.ic_settings));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        if (isLoggingIn()) {
-            menuModel = new MenuModel(getString(R.string.menu_id_logout), getString(R.string.menu_logout), true, false, getResources().getDrawable(R.drawable.ic_logout));
-            headerList.add(menuModel);
-            if (!menuModel.hasChildren) {
-                childList.put(menuModel, null);
-            }
-        }
-
+    @OnClick(R.id.rl_infor)
+    public void onCallEditProfile(View view) {
+        startActivityForResult(new Intent(getActivity(), EditProfileActivity.class), Common.REQUEST_EDIT_PROFILE);
     }
 
     @Override
@@ -210,11 +209,14 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
         MainActivity.token = null;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(Common.IS_LOGGING_IN, false);
+        editor.putString(Common.TOKEN_SAVED, null);
+        editor.putString(Common.MYPROFILE, null);
         editor.commit();
-        headerList.clear();
+        fragmentList.clear();
+        //send message to tab my reviews
+//        myReviewFragment.getListReviewFromServer(null);
         android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-
     }
 
     @Override
@@ -236,10 +238,16 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
 
     private void createIntentSignin() {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
-        getActivity().startActivity(intent);
+        getActivity().startActivityForResult(intent, Common.REQUEST_LOGIN);
     }
 
-    public boolean isLoggingIn() {
-        return isLoggingIn;
+    @Override
+    public void onShowProgressDialog(String msg) {
+
+    }
+
+    @Override
+    public void onDismissProgressDialog() {
+
     }
 }

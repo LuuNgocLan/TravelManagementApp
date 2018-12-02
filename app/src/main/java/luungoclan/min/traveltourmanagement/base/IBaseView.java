@@ -8,5 +8,6 @@ import android.content.Context;
 public interface IBaseView {
     Context getContext();
     void onShowProgressDialog(String msg);
+
     void onDismissProgressDialog();
 }

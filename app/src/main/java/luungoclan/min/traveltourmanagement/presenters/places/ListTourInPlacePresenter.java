@@ -2,8 +2,7 @@ package luungoclan.min.traveltourmanagement.presenters.places;
 
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
-import luungoclan.min.traveltourmanagement.models.places.PlaceResponse;
-import luungoclan.min.traveltourmanagement.models.places.tourInPlace.TourInPlaceResponse;
+import luungoclan.min.traveltourmanagement.models.tourList.tourInPlace.TourInPlaceResponse;
 import luungoclan.min.traveltourmanagement.views.places.IListTourInPlaceView;
 import retrofit2.Call;
 import retrofit2.Callback;

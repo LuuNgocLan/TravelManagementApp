@@ -1,11 +1,17 @@
 package luungoclan.min.traveltourmanagement.presenters.detailTour;
 
+import android.util.Log;
+
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
 import luungoclan.min.traveltourmanagement.models.detailTour.DetailTourResponse;
 import luungoclan.min.traveltourmanagement.models.detailTour.TourAnotherDayResponse;
+import luungoclan.min.traveltourmanagement.models.login.LoginResponse;
 import luungoclan.min.traveltourmanagement.models.reviewOfTour.ReviewOfTourResponse;
+import luungoclan.min.traveltourmanagement.models.reviewOfUser.addReview.AddReviewResponse;
 import luungoclan.min.traveltourmanagement.views.detailTour.IDetailTourActivity;
+import luungoclan.min.traveltourmanagement.views.main.MainActivity;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,6 +83,28 @@ public class DetailTourPresenter implements IDetailTourPresenter {
             @Override
             public void onFailure(Call<TourAnotherDayResponse> call, Throwable t) {
                 iDetailTourActivity.getListReviewOfTourFailure();
+            }
+        });
+    }
+
+    @Override
+    public void addReview(String token, RequestBody json) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<AddReviewResponse> call = apiService.addReview(token, json);
+        call.enqueue(new Callback<AddReviewResponse>() {
+            @Override
+            public void onResponse(Call<AddReviewResponse> call, Response<AddReviewResponse> response) {
+                if (response.code() >= 300) {
+                    iDetailTourActivity.addReviewFailure();
+                } else if (response.code() == 200) {
+                    iDetailTourActivity.addReviewSuccess();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<AddReviewResponse> call, Throwable t) {
+                iDetailTourActivity.addReviewFailure();
             }
         });
     }
