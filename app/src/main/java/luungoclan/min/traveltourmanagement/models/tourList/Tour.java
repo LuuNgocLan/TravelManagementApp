@@ -1,9 +1,16 @@
 package luungoclan.min.traveltourmanagement.models.tourList;
 
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Tour {
+import java.io.Serializable;
+
+@SuppressLint("ParcelCreator")
+public class Tour implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -157,5 +164,15 @@ public class Tour {
 
     public void setIdTypeTour(Integer idTypeTour) {
         this.idTypeTour = idTypeTour;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

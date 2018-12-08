@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="165dp"
         android:src="@mipmap/ic_logo_launcher_foreground" />
@@ -24,19 +24,14 @@
         android:layout_margin="20dp"
         android:text="GO TRAVEL"
         android:textColor="#ffffff"
-        android:textSize="30sp"
+        android:textSize="36sp"
         android:textStyle="bold" />
 
-    <TextView
+    <com.wang.avi.AVLoadingIndicatorView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:text="GO TRAVEL"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
+        android:layout_alignParentBottom="true"
+        app:indicatorName="BallPulseIndicator" />
 
 </RelativeLayout>

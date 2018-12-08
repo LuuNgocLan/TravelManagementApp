@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,12 +78,15 @@ public class DetailTourActivity extends BaseActivity implements View.OnClickList
     BaseHeaderBar mBaseHeaderBar;
     @BindView(R.id.tv_price_tour)
     TextView tvPriceTour;
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
 
     private int[] mImages = {R.drawable.img_1, R.drawable.img_2, R.drawable.img_1, R.drawable.img_2, R.drawable.img_1};
     private TextView[] mDots;
     private SlideAdapter mSlideAdapter;
     private boolean isLoggedIn = false;
 
+    private DataDetailTour detailTour;
     private MyProfile userCurrent = null;
     private String tokenUser = null;
     private SharedPreferences sharedPreferences;
@@ -214,7 +218,11 @@ public class DetailTourActivity extends BaseActivity implements View.OnClickList
 
     @OnClick(R.id.btn_book_tour)
     public void onCallBookTour(View view) {
-        startActivity(new Intent(this, BookingActivity.class));
+        Intent intent = new Intent(this, BookingActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Common.BUNDLE_TOUR_DETAIL, detailTour);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
@@ -278,6 +286,7 @@ public class DetailTourActivity extends BaseActivity implements View.OnClickList
     @Override
     public void getDetailTourSuccess(DataDetailTour dataDetailTour) {
         if (dataDetailTour != null) {
+            this.detailTour = dataDetailTour;
             ViewDataUtils.setDataToView(tvDetailTourProgram, dataDetailTour.getPrograms());
             ViewDataUtils.setDataToView(tvDetailTourName, dataDetailTour.getName());
             if (dataDetailTour.getDetail() != null) {
@@ -320,6 +329,7 @@ public class DetailTourActivity extends BaseActivity implements View.OnClickList
         rvTourChangeDay.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
         TourAdapter tourAdapter = new TourAdapter(dataTour, this, R.layout.item_tour_vertical);
         rvTourChangeDay.setAdapter(tourAdapter);
+        indicatorView.smoothToHide();
     }
 
     @Override

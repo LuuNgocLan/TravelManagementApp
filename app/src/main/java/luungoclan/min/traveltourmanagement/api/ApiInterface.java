@@ -1,5 +1,7 @@
 package luungoclan.min.traveltourmanagement.api;
 
+import luungoclan.min.traveltourmanagement.models.booking.BookingResponse;
+import luungoclan.min.traveltourmanagement.models.booking.ListBookingOfUserResponse;
 import luungoclan.min.traveltourmanagement.models.detailTour.DetailTourResponse;
 import luungoclan.min.traveltourmanagement.models.detailTour.TourAnotherDayResponse;
 import luungoclan.min.traveltourmanagement.models.login.LoginResponse;
@@ -7,6 +9,7 @@ import luungoclan.min.traveltourmanagement.models.logout.LogoutResponse;
 import luungoclan.min.traveltourmanagement.models.myProfile.EditProfileResponse;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfileResponse;
 import luungoclan.min.traveltourmanagement.models.places.PlaceResponse;
+import luungoclan.min.traveltourmanagement.models.slide.SlidesResponse;
 import luungoclan.min.traveltourmanagement.models.tourList.tourInPlace.TourInPlaceResponse;
 import luungoclan.min.traveltourmanagement.models.reviewOfTour.ReviewOfTourResponse;
 import luungoclan.min.traveltourmanagement.models.reviewOfUser.ReviewOfUserResponse;
@@ -88,6 +91,16 @@ public interface ApiInterface {
     Call<EditProfileResponse> changePassword(@Header("Authorization") String token,
                                              @Part MultipartBody.Part password);
 
-    
+    @GET("api/images")
+    Call<SlidesResponse> getAllSlides();
+
+
+    @POST("api/person-order")
+    Call<BookingResponse> addBooking(@Header("Authorization") String token,
+                                     @Body RequestBody json);
+
+    @GET("api/order-user")
+    Call<ListBookingOfUserResponse> getAllBookingOfUser(@Header("Authorization") String token);
+
 
 }

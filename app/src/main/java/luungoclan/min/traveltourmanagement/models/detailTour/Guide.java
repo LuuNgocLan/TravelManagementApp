@@ -3,7 +3,9 @@ package luungoclan.min.traveltourmanagement.models.detailTour;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Guide {
+import java.io.Serializable;
+
+public class Guide implements Serializable{
     @SerializedName("id")
     @Expose
     private Integer id;

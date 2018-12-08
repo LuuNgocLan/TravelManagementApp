@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.BasePagerAdapter;
+import luungoclan.min.traveltourmanagement.models.booking.Booking;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
 import luungoclan.min.traveltourmanagement.presenters.myAccount.ILogoutImpl;
 import luungoclan.min.traveltourmanagement.presenters.myAccount.LogoutImpl;
@@ -73,6 +75,9 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
 
     @BindView(R.id.toolbar)
     BaseHeaderBar mToolbar;
+
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private MyBookingFragment myBookingFragment = new MyBookingFragment();
@@ -176,7 +181,7 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
             }
             //send message to tab my reviews
             myReviewFragment.getListReviewFromServer(token);
-
+            iLogoutImpl.getMyBooking(token);
         } else {
             logoutMenu.setVisible(false);
             tvName.setVisibility(View.GONE);
@@ -222,6 +227,19 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
     @Override
     public void logoutFailure(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getListBookingSuccess(List<Booking> bookingList) {
+        Toast.makeText(getContext(), "Get Booking Success", Toast.LENGTH_SHORT).show();
+        myBookingFragment.dataBooking(bookingList);
+        indicatorView.smoothToHide();
+    }
+
+    @Override
+    public void getListBookingFailure() {
+        Toast.makeText(getContext(), "Get Booking Failure", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

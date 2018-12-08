@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
@@ -21,9 +23,11 @@ import luungoclan.min.traveltourmanagement.presenters.places.PlacePresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlacesFragment extends Fragment implements IPlacesFragment {
+public class PlacesFragment extends Fragment implements IPlaceView {
     @BindView(R.id.gv_places)
     HorizontalGridView gvPlaces;
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
 
     private PlaceAdapter placeAdapter;
     private PlacePresenter placePresenter;
@@ -70,12 +74,22 @@ public class PlacesFragment extends Fragment implements IPlacesFragment {
             //load list place to gridview
             gvPlaces.setAdapter(new PlaceAdapter(getContext(), placeData.getPlace()));
         }
-
+        indicatorView.smoothToHide();
 
     }
 
     @Override
     public void getPlaceListFailure() {
+
+    }
+
+    @Override
+    public void onShowProgressDialog(String msg) {
+
+    }
+
+    @Override
+    public void onDismissProgressDialog() {
 
     }
 }

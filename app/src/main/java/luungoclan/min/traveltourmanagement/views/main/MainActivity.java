@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
         sharedPreferences = getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
         addControls();
+
     }
 
     private void addControls() {
