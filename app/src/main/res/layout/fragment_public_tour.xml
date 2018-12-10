@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_gray"
     tools:context=".views.publicTour.PublicTourFragment">
 
     <ScrollView
@@ -72,23 +73,17 @@
                             android:id="@+id/ll_whereSearch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone"
-                            android:weightSum="10">
+                            android:visibility="gone">
 
-                            <TextView
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_places"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="@string/search_your_destination"
-                                android:textColor="@android:color/black" />
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp" />
 
-                            <EditText
-                                android:id="@+id/edt_your_destination"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4" />
                         </LinearLayout>
+
 
                         <Button
                             android:id="@+id/btn_when"
@@ -136,11 +131,11 @@
                                     android:id="@+id/btn_check_in"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
                                     android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
                                     android:background="@color/colorAccent"
-                                    android:src="@drawable/ic_calendar"
                                     android:padding="2dp"
+                                    android:src="@drawable/ic_calendar"
                                     android:tint="@color/color_white" />
                             </LinearLayout>
 

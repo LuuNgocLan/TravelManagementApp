@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
-import luungoclan.min.traveltourmanagement.adapters.placeAdapter.BookingAdapter;
+import luungoclan.min.traveltourmanagement.adapters.bookingAdapter.BookingAdapter;
 import luungoclan.min.traveltourmanagement.models.booking.Booking;
 
 /**
@@ -48,8 +48,14 @@ public class MyBookingFragment extends Fragment {
     }
 
     public void dataBooking(List<Booking> bookingList) {
-        this.bookingList = bookingList;
-        adapter = new BookingAdapter(getContext(), bookingList);
-        rvMyBooking.setAdapter(adapter);
+        if (bookingList.size() > 0) {
+            this.bookingList = bookingList;
+            adapter = new BookingAdapter(getContext(), bookingList);
+            rvMyBooking.setAdapter(adapter);
+            tvMsgNoBooking.setVisibility(View.GONE);
+        } else {
+            rvMyBooking.setVisibility(View.GONE);
+            tvMsgNoBooking.setVisibility(View.VISIBLE);
+        }
     }
 }

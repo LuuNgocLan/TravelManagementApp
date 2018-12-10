@@ -34,15 +34,19 @@ import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.BasePagerAdapter;
 import luungoclan.min.traveltourmanagement.models.booking.Booking;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
+import luungoclan.min.traveltourmanagement.models.reviewOfUser.Review;
 import luungoclan.min.traveltourmanagement.presenters.myAccount.ILogoutImpl;
 import luungoclan.min.traveltourmanagement.presenters.myAccount.LogoutImpl;
 import luungoclan.min.traveltourmanagement.presenters.myProfile.IMyProfileImpl;
+import luungoclan.min.traveltourmanagement.presenters.myReview.IMyReviewImpl;
+import luungoclan.min.traveltourmanagement.presenters.myReview.MyReviewImpl;
 import luungoclan.min.traveltourmanagement.ui.BaseHeaderBar;
 import luungoclan.min.traveltourmanagement.utils.Common;
 import luungoclan.min.traveltourmanagement.views.login.LoginActivity;
 import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 import luungoclan.min.traveltourmanagement.views.myBooking.MyBookingFragment;
 import luungoclan.min.traveltourmanagement.views.myProfile.EditProfileActivity;
+import luungoclan.min.traveltourmanagement.views.myReview.IMyReviewView;
 import luungoclan.min.traveltourmanagement.views.myReview.MyReviewFragment;
 import okhttp3.RequestBody;
 
@@ -52,7 +56,7 @@ import static luungoclan.min.traveltourmanagement.ui.BaseHeaderBar.HeaderBarType
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyAccountFragment extends Fragment implements IMyAccountFragment, View.OnClickListener {
+public class MyAccountFragment extends Fragment implements IMyAccountFragment, View.OnClickListener, IMyReviewView {
     @BindView(R.id.imv_avatar)
     ImageView imvAvatar;
 
@@ -91,6 +95,7 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
     private MyProfile currentUser = null;
     private IMyProfileImpl iMyProfileImpl;
     private ILogoutImpl iLogoutImpl;
+    private IMyReviewImpl iMyReviewImpl;
     private String token;
     private MenuItem logoutMenu;
 
@@ -106,9 +111,9 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
 
         sharedPreferences = getActivity().getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
         isLoggingIn = sharedPreferences.getBoolean(Common.IS_LOGGING_IN, false);
-        token = sharedPreferences.getString(Common.TOKEN_SAVED, null);
 
         iLogoutImpl = new LogoutImpl(this);
+        iMyReviewImpl = new MyReviewImpl(this);
 
         initView();
         initTabs();
@@ -150,6 +155,7 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
     @Override
     public void onResume() {
         super.onResume();
+        token = sharedPreferences.getString(Common.TOKEN_SAVED, null);
         Toast.makeText(getActivity(), "On resume", Toast.LENGTH_SHORT).show();
         isLoggingIn = sharedPreferences.getBoolean(Common.IS_LOGGING_IN, false);
         checkDisplayView();
@@ -179,9 +185,9 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
                 tvName.setText(currentUser.getUsername());
                 tvAddr.setText(currentUser.getAddress());
             }
-            //send message to tab my reviews
-            myReviewFragment.getListReviewFromServer(token);
+
             iLogoutImpl.getMyBooking(token);
+            iMyReviewImpl.getMyReview(token);
         } else {
             logoutMenu.setVisible(false);
             tvName.setVisibility(View.GONE);
@@ -266,6 +272,17 @@ public class MyAccountFragment extends Fragment implements IMyAccountFragment, V
 
     @Override
     public void onDismissProgressDialog() {
+
+    }
+
+    @Override
+    public void getMyDataReviewSuccess(List<Review> reviewList) {
+        myReviewFragment.getListReviewFromServer(reviewList);
+
+    }
+
+    @Override
+    public void getMyReviewFailure() {
 
     }
 }

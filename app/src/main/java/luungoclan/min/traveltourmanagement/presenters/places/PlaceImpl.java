@@ -9,9 +9,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlacePresenter extends BasePresenter<IPlaceView> implements IPlaceImpl {
+public class PlaceImpl extends BasePresenter<IPlaceView> implements IPlaceImpl {
 
-    public PlacePresenter(IPlaceView view) {
+    public PlaceImpl(IPlaceView view) {
         super(view);
     }
 

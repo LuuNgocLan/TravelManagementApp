@@ -43,12 +43,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.placeAdapter.PlaceAdapter;
+import luungoclan.min.traveltourmanagement.adapters.placeAdapter.PlaceSearchAdapter;
 import luungoclan.min.traveltourmanagement.adapters.tourAdapter.TourOfferAdapter;
 import luungoclan.min.traveltourmanagement.models.fakes.TourOffer;
+import luungoclan.min.traveltourmanagement.models.places.Place;
 import luungoclan.min.traveltourmanagement.models.places.PlaceData;
+import luungoclan.min.traveltourmanagement.models.places.SelectedPlace;
 import luungoclan.min.traveltourmanagement.models.slide.Slide;
 import luungoclan.min.traveltourmanagement.models.tourList.DataTourList;
 import luungoclan.min.traveltourmanagement.models.tourList.Tour;
+import luungoclan.min.traveltourmanagement.presenters.places.IPlaceImpl;
+import luungoclan.min.traveltourmanagement.presenters.places.PlaceImpl;
 import luungoclan.min.traveltourmanagement.presenters.tour.PublicTourImpl;
 import luungoclan.min.traveltourmanagement.utils.Common;
 import luungoclan.min.traveltourmanagement.views.places.IPlaceView;
@@ -58,7 +63,7 @@ import okhttp3.RequestBody;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PublicTourFragment extends Fragment implements View.OnClickListener, IPublicTourView, IPlaceView {
+public class PublicTourFragment extends Fragment implements View.OnClickListener, IPublicTourView, IPlaceView, PlaceSearchAdapter.OnItemSelectedListener {
 
     private Button btnWhere, btnWhen;
     private LinearLayout llSearchWhere, llSearchWhen;
@@ -67,6 +72,7 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     private TourOfferAdapter tourOfferAdapter;
     public boolean isShowWhereSearch = true, isShowWhenSearch = true;
     private PublicTourImpl publicTourPresenter;
+    private IPlaceImpl iPlaceImpl;
     private Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
 
@@ -86,11 +92,16 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     EditText edtCheckIn;
     @BindView(R.id.indicatorView)
     AVLoadingIndicatorView indicatorView;
+    @BindView(R.id.rv_places)
+    RecyclerView rvPlaces;
 
     private int[] mImages = {R.drawable.img_1, R.drawable.img_2, R.drawable.img_1};
     private TextView[] mDots;
     private SlideAdapter mSlideAdapter;
     private List<Slide> slideList = new ArrayList<>();
+    private List<Place> placeList = new ArrayList<>();
+    private PlaceSearchAdapter mPlaceSearchAdapter;
+    private Place placeInforSearch;
 
     private static final long SLIDER_TIMER = 3000; // change slider interval
     private int currentPage = 0; // this will tell us the current page available on the view pager
@@ -178,6 +189,8 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     private void initPresenter() {
         publicTourPresenter = new PublicTourImpl(this);
         publicTourPresenter.getAllSlides();
+        iPlaceImpl = new PlaceImpl(this);
+        iPlaceImpl.getPlaceList();
     }
 
     private void setEvent() {
@@ -191,11 +204,14 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
         llSearchWhen = view.findViewById(R.id.ll_wheneSearch);
         llSearchWhere = view.findViewById(R.id.ll_whereSearch);
         rvTourOffer = view.findViewById(R.id.rv_latestOffers);
+
         rvTourOffer.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvTopDestinations = view.findViewById(R.id.rv_topDestinations);
         rvTopDestinations.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvTopPlaces.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
         tourOfferList = new ArrayList<>();
+
+        rvPlaces.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
@@ -264,15 +280,21 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
         smonth += String.valueOf(mMonth + 1);
         if (mDay < 9) sday = "0";
         sday += String.valueOf(mDay);
-        edtCheckIn.setText(sday + smonth + syear);
-
     }
 
     private void getDataJsonSearch() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("date_depart", "2018-12-01");
-            jsonObject.put("id_location", 2);
+            if (edtCheckIn.getText().toString().equals("dd-MM-yyyy")) {
+                jsonObject.put("date_depart", "");
+            } else {
+                jsonObject.put("date_depart", edtCheckIn.getText().toString());
+            }
+            if (placeInforSearch == null) {
+                jsonObject.put("id_location", "");
+            } else {
+                jsonObject.put("id_location", placeInforSearch.getId());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -378,8 +400,6 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
             public void onFinish() {
 
                 int nextSlider = currentPage + 1;
-
-
                 if (nextSlider == 3) {
                     nextSlider = 0; // if it's last Image, let it go to the first image
                 }
@@ -399,7 +419,10 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void getPlaceListSuccess(PlaceData placeData) {
-
+        this.placeList = placeData.getPlace();
+        Toast.makeText(getContext(), placeData.toString(), Toast.LENGTH_LONG).show();
+        mPlaceSearchAdapter = new PlaceSearchAdapter(getContext(), placeList, this);
+        rvPlaces.setAdapter(mPlaceSearchAdapter);
     }
 
     @Override
@@ -415,6 +438,13 @@ public class PublicTourFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDismissProgressDialog() {
 
+    }
+
+    @Override
+    public void onItemSelected(Place item) {
+        placeInforSearch = item;
+        Toast.makeText(getContext(), placeInforSearch.getName(), Toast.LENGTH_SHORT).show();
+        mPlaceSearchAdapter.notifyDataSetChanged();
     }
 
     ////////////////////////////////////

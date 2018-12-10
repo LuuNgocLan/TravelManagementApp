@@ -1,6 +1,7 @@
 package luungoclan.min.traveltourmanagement.api;
 
 import luungoclan.min.traveltourmanagement.models.booking.BookingResponse;
+import luungoclan.min.traveltourmanagement.models.booking.CancelBookingResponse;
 import luungoclan.min.traveltourmanagement.models.booking.ListBookingOfUserResponse;
 import luungoclan.min.traveltourmanagement.models.detailTour.DetailTourResponse;
 import luungoclan.min.traveltourmanagement.models.detailTour.TourAnotherDayResponse;
@@ -101,6 +102,10 @@ public interface ApiInterface {
 
     @GET("api/order-user")
     Call<ListBookingOfUserResponse> getAllBookingOfUser(@Header("Authorization") String token);
+
+    @POST("api/cancel-order")
+    Call<CancelBookingResponse> cancelMyBooking(@Header("Authorization") String token,
+                                                @Body RequestBody json);
 
 
 }

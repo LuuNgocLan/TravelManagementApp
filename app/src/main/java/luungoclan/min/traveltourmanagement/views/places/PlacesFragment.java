@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.placeAdapter.PlaceAdapter;
 import luungoclan.min.traveltourmanagement.models.places.PlaceData;
-import luungoclan.min.traveltourmanagement.presenters.places.PlacePresenter;
+import luungoclan.min.traveltourmanagement.presenters.places.PlaceImpl;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +30,7 @@ public class PlacesFragment extends Fragment implements IPlaceView {
     AVLoadingIndicatorView indicatorView;
 
     private PlaceAdapter placeAdapter;
-    private PlacePresenter placePresenter;
+    private PlaceImpl placePresenter;
     private PlaceData placeData;
 
     public PlacesFragment() {
@@ -54,16 +54,13 @@ public class PlacesFragment extends Fragment implements IPlaceView {
     }
 
     private void initPresenter() {
-        placePresenter = new PlacePresenter(this);
+        placePresenter = new PlaceImpl(this);
     }
 
     private void setEvent() {
     }
 
     private void init(View view) {
-        int resId = R.anim.layout_animation_fall_down;
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
-        gvPlaces.setLayoutAnimation(animation);
         gvPlaces.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
     }
 

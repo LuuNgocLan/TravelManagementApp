@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class AllTourActivity extends AppCompatActivity implements IAllTourView {
     RecyclerView rvAllTours;
     @BindView(R.id.tv_msg_no_tour)
     TextView tvMsgNoTour;
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
 
     private IAllTourImpl iAllTourImpl;
     private TourInPlaceAdapter adapter;
@@ -41,7 +45,6 @@ public class AllTourActivity extends AppCompatActivity implements IAllTourView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_tour);
         ButterKnife.bind(this);
-        onShowProgressDialog("Loading...");
         baseHeaderBar.setHeaderBarStyle(HEADER_BAR_DEFAULT_WHITE);
         baseHeaderBar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         baseHeaderBar.setTitleToolBar("All tours");
@@ -60,7 +63,7 @@ public class AllTourActivity extends AppCompatActivity implements IAllTourView {
         this.listAllTour = tourList;
         adapter = new TourInPlaceAdapter(listAllTour, this);
         rvAllTours.setAdapter(adapter);
-        onDismissProgressDialog();
+        indicatorView.smoothToHide();
     }
 
     @Override

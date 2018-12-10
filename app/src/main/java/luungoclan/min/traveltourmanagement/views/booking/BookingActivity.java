@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +59,8 @@ public class BookingActivity extends AppCompatActivity implements BookingView {
     Spinner spnChilds;
     @BindView(R.id.edt_note)
     EditText edtNote;
-
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
     private IAddBoookingImpl iAddBoookingImpl;
     private SharedPreferences mSharedPreferences;
     private MyProfile currentUser = null;
@@ -73,6 +75,7 @@ public class BookingActivity extends AppCompatActivity implements BookingView {
         ButterKnife.bind(this);
         loadDefaultData();
         getDataIntent();
+        indicatorView.smoothToHide();
     }
 
     private void getDataIntent() {
@@ -108,7 +111,7 @@ public class BookingActivity extends AppCompatActivity implements BookingView {
 
     @OnClick(R.id.btn_book_tour)
     public void onConfirmBookTour(View view) {
-
+        indicatorView.smoothToShow();
         iAddBoookingImpl = new AddBookingImpl(this);
         getDataAndCallApi();
 
@@ -152,12 +155,14 @@ public class BookingActivity extends AppCompatActivity implements BookingView {
 
     @Override
     public void addBookingSuccess() {
-        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Add Booking Success", Toast.LENGTH_SHORT).show();
+        indicatorView.smoothToHide();
     }
 
     @Override
     public void addBookingFailure() {
-        Toast.makeText(this, "Failure!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Add Booking Failure!", Toast.LENGTH_SHORT).show();
+        indicatorView.smoothToHide();
     }
 
     @Override

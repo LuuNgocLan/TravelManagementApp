@@ -34,12 +34,18 @@ public class Booking {
     @SerializedName("status")
     @Expose
     private Integer status;
-    @SerializedName("id_detail_tour")
+    @SerializedName("name_tour")
     @Expose
-    private Integer idDetailTour;
-    @SerializedName("id_user")
+    private String nameTour;
+    @SerializedName("price_total")
     @Expose
-    private Integer idUser;
+    private Integer priceTotal;
+    @SerializedName("discount")
+    @Expose
+    private Integer discount;
+    @SerializedName("total")
+    @Expose
+    private Integer total;
 
     public Integer getId() {
         return id;
@@ -121,19 +127,35 @@ public class Booking {
         this.status = status;
     }
 
-    public Integer getIdDetailTour() {
-        return idDetailTour;
+    public String getNameTour() {
+        return nameTour;
     }
 
-    public void setIdDetailTour(Integer idDetailTour) {
-        this.idDetailTour = idDetailTour;
+    public void setNameTour(String nameTour) {
+        this.nameTour = nameTour;
     }
 
-    public Integer getIdUser() {
-        return idUser;
+    public Integer getPriceTotal() {
+        return priceTotal;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setPriceTotal(Integer priceTotal) {
+        this.priceTotal = priceTotal;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 }
