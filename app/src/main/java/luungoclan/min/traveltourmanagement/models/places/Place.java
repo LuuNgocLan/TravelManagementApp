@@ -14,6 +14,14 @@ public class Place {
     @Expose
     private String image;
 
+    public Place(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Place(String name, Integer id) {
+    }
+
     public Integer getId() {
         return id;
     }

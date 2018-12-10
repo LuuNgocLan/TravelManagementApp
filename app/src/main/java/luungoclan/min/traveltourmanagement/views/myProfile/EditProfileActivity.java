@@ -25,7 +25,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,6 +40,8 @@ import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
 import luungoclan.min.traveltourmanagement.presenters.myProfile.EditProfileImpl;
 import luungoclan.min.traveltourmanagement.presenters.myProfile.IEditProfileImpl;
+import luungoclan.min.traveltourmanagement.presenters.myProfile.IMyProfileImpl;
+import luungoclan.min.traveltourmanagement.presenters.myProfile.MyProfileImpl;
 import luungoclan.min.traveltourmanagement.ui.BaseHeaderBar;
 import luungoclan.min.traveltourmanagement.utils.Common;
 import luungoclan.min.traveltourmanagement.utils.ImageUtils;
@@ -48,9 +52,10 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
-public class EditProfileActivity extends AppCompatActivity implements IEditProfileView {
+public class EditProfileActivity extends AppCompatActivity implements IEditProfileView, IProfileView {
 
     private static final int REQUEST_IMAGE = 1010;
+
     @BindView(R.id.baseHeaderBar)
     BaseHeaderBar mBaseHeaderBar;
 
@@ -72,10 +77,15 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
     @BindView(R.id.edt_adress)
     EditText edtAddr;
 
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
+
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private MyProfile currentUser = null;
     private Uri imageUri;
     private IEditProfileImpl iEditProfileImpl;
+    private IMyProfileImpl iMyProfileImpl;
     private String token;
 
     @Override
@@ -110,6 +120,7 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
 
     private void init() {
         sharedPreferences = getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         mBaseHeaderBar.setHeaderBarStyle(BaseHeaderBar.HeaderBarType.HEADER_BAR_EDIT_PROFILE);
         mBaseHeaderBar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mBaseHeaderBar.setTitleToolBar("Edit Profile");
@@ -118,7 +129,6 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_save) {
-                    Toast.makeText(getBaseContext(), "save profile", Toast.LENGTH_SHORT).show();
                     uploadFile(imageUri);
                 }
                 return false;
@@ -126,6 +136,7 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
         });
 
         iEditProfileImpl = new EditProfileImpl(this);
+        iMyProfileImpl = new MyProfileImpl(this);
     }
 
     private void uploadFile(Uri fileUri) {
@@ -142,6 +153,8 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
                 MultipartBody.Part email = MultipartBody.Part.createFormData("email", edtEmail.getText().toString());
                 MultipartBody.Part phone = MultipartBody.Part.createFormData("phone", edtPhone.getText().toString());
                 MultipartBody.Part address = MultipartBody.Part.createFormData("address", edtAddr.getText().toString());
+
+                indicatorView.smoothToShow();
                 iEditProfileImpl.onEditProfile(
                         token,
                         avatar,
@@ -207,11 +220,14 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
     @Override
     public void editProfileSuccess() {
         Toast.makeText(this, "Edit profile success!", Toast.LENGTH_SHORT).show();
+        //get new profile had change
+        iMyProfileImpl.onGetProfile(token);
     }
 
     @Override
     public void editProfileFailure() {
         Toast.makeText(this, "Edit profile Failure!", Toast.LENGTH_SHORT).show();
+        indicatorView.smoothToHide();
     }
 
     @Override
@@ -236,6 +252,24 @@ public class EditProfileActivity extends AppCompatActivity implements IEditProfi
 
     @Override
     public void onDismissProgressDialog() {
+
+    }
+
+    @Override
+    public void getProfileSuccess(MyProfile myProfile) {
+        //Upload data profile to shared Preference
+        if (myProfile != null) {
+            Gson gson = new Gson();
+            String jsonMyProfile = gson.toJson(myProfile);
+            editor.putString(Common.MYPROFILE, jsonMyProfile);
+            editor.commit();
+        }
+        indicatorView.smoothToHide();
+    }
+
+    @Override
+    public void getProfileFailure() {
+        indicatorView.smoothToHide();
 
     }
 }

@@ -6,15 +6,16 @@ import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
 import luungoclan.min.traveltourmanagement.base.BasePresenter;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfileResponse;
-import luungoclan.min.traveltourmanagement.views.login.ILoginActivity;
+import luungoclan.min.traveltourmanagement.views.login.ILoginView;
+import luungoclan.min.traveltourmanagement.views.myProfile.IProfileView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyProfileImpl extends BasePresenter<ILoginActivity> implements IMyProfileImpl {
+public class MyProfileImpl extends BasePresenter<IProfileView> implements IMyProfileImpl {
     public static String TAG = "MY PROFILE PRESENTER";
 
-    public MyProfileImpl(ILoginActivity view) {
+    public MyProfileImpl(IProfileView view) {
         super(view);
     }
 

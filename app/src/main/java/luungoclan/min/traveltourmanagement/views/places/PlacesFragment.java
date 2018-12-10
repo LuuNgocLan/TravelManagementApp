@@ -11,22 +11,26 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.adapters.placeAdapter.PlaceAdapter;
 import luungoclan.min.traveltourmanagement.models.places.PlaceData;
-import luungoclan.min.traveltourmanagement.presenters.places.PlacePresenter;
+import luungoclan.min.traveltourmanagement.presenters.places.PlaceImpl;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlacesFragment extends Fragment implements IPlacesFragment {
+public class PlacesFragment extends Fragment implements IPlaceView {
     @BindView(R.id.gv_places)
     HorizontalGridView gvPlaces;
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
 
     private PlaceAdapter placeAdapter;
-    private PlacePresenter placePresenter;
+    private PlaceImpl placePresenter;
     private PlaceData placeData;
 
     public PlacesFragment() {
@@ -50,16 +54,13 @@ public class PlacesFragment extends Fragment implements IPlacesFragment {
     }
 
     private void initPresenter() {
-        placePresenter = new PlacePresenter(this);
+        placePresenter = new PlaceImpl(this);
     }
 
     private void setEvent() {
     }
 
     private void init(View view) {
-        int resId = R.anim.layout_animation_fall_down;
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
-        gvPlaces.setLayoutAnimation(animation);
         gvPlaces.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
     }
 
@@ -70,12 +71,22 @@ public class PlacesFragment extends Fragment implements IPlacesFragment {
             //load list place to gridview
             gvPlaces.setAdapter(new PlaceAdapter(getContext(), placeData.getPlace()));
         }
-
+        indicatorView.smoothToHide();
 
     }
 
     @Override
     public void getPlaceListFailure() {
+
+    }
+
+    @Override
+    public void onShowProgressDialog(String msg) {
+
+    }
+
+    @Override
+    public void onDismissProgressDialog() {
 
     }
 }

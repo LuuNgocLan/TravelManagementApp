@@ -32,4 +32,5 @@
         app:tabSelectedTextColor="@color/colorAccent"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
         app:tabTextColor="@color/colorTitle" />
+
 </RelativeLayout>

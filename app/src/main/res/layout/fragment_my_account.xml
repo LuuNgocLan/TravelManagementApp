@@ -58,8 +58,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignBottom="@+id/imv_background"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
@@ -118,4 +118,13 @@
 
     </luungoclan.min.traveltourmanagement.ui.BaseHeaderBar>
 
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/indicatorView"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:indicatorColor="@android:color/black"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
 </RelativeLayout>

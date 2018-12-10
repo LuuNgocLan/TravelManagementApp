@@ -21,21 +21,22 @@ import org.json.JSONObject;
 
 import luungoclan.min.traveltourmanagement.R;
 import luungoclan.min.traveltourmanagement.models.myProfile.MyProfile;
-import luungoclan.min.traveltourmanagement.presenters.login.LoginPresenter;
+import luungoclan.min.traveltourmanagement.presenters.login.LoginImpl;
 import luungoclan.min.traveltourmanagement.presenters.myProfile.IMyProfileImpl;
 import luungoclan.min.traveltourmanagement.presenters.myProfile.MyProfileImpl;
 import luungoclan.min.traveltourmanagement.utils.Utils;
 import luungoclan.min.traveltourmanagement.utils.Common;
+import luungoclan.min.traveltourmanagement.views.myProfile.IProfileView;
 import okhttp3.RequestBody;
 
 import static luungoclan.min.traveltourmanagement.utils.Common.RESULT_LOGIN_SUCCESS;
 
-public class LoginActivity extends AppCompatActivity implements ILoginActivity, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements ILoginView, View.OnClickListener,IProfileView {
 
     private EditText edtUsername, edtPass;
     private TextView tvErrorSomethingWrong;
     private Button btnLogin;
-    private LoginPresenter loginPresenter;
+    private LoginImpl loginPresenter;
     private JSONObject jsonObject;
     private ProgressDialog progressDialog;
     private String username, password;
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     private void init() {
         sharedPreferences = getSharedPreferences(Common.PREF_REMEMBER_ME, MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        loginPresenter = new LoginPresenter(this);
+        loginPresenter = new LoginImpl(this);
         tvErrorSomethingWrong = findViewById(R.id.tv_error_SomethingWrong);
         edtUsername = findViewById(R.id.edt_email);
         edtPass = findViewById(R.id.edt_password);

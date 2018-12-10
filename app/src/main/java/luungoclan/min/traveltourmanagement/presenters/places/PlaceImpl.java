@@ -2,17 +2,17 @@ package luungoclan.min.traveltourmanagement.presenters.places;
 
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
+import luungoclan.min.traveltourmanagement.base.BasePresenter;
 import luungoclan.min.traveltourmanagement.models.places.PlaceResponse;
-import luungoclan.min.traveltourmanagement.views.places.IPlacesFragment;
+import luungoclan.min.traveltourmanagement.views.places.IPlaceView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlacePresenter implements IPlacePresenter {
-    private IPlacesFragment iPlacesFragment;
+public class PlaceImpl extends BasePresenter<IPlaceView> implements IPlaceImpl {
 
-    public PlacePresenter(IPlacesFragment iPlacesFragment) {
-        this.iPlacesFragment = iPlacesFragment;
+    public PlaceImpl(IPlaceView view) {
+        super(view);
     }
 
     @Override
@@ -23,15 +23,15 @@ public class PlacePresenter implements IPlacePresenter {
             @Override
             public void onResponse(Call<PlaceResponse> call, Response<PlaceResponse> response) {
                 if (response.body().getResultCode() >= 300) {
-                    iPlacesFragment.getPlaceListFailure();
+                    view.getPlaceListFailure();
                 } else if (response.body().getResultCode() == 200) {
-                    iPlacesFragment.getPlaceListSuccess(response.body().getData());
+                    view.getPlaceListSuccess(response.body().getData());
                 }
             }
 
             @Override
             public void onFailure(Call<PlaceResponse> call, Throwable t) {
-                iPlacesFragment.getPlaceListFailure();
+                view.getPlaceListFailure();
             }
         });
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/color_gray"
     tools:context=".views.publicTour.PublicTourFragment">
 
     <ScrollView
@@ -72,22 +73,17 @@
                             android:id="@+id/ll_whereSearch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone"
-                            android:weightSum="10">
+                            android:visibility="gone">
 
-                            <TextView
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_places"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="@string/search_your_destination"
-                                android:textColor="@android:color/black" />
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp" />
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4" />
                         </LinearLayout>
+
 
                         <Button
                             android:id="@+id/btn_when"
@@ -113,43 +109,36 @@
                                 android:weightSum="10">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="6"
+                                    android:layout_weight="3"
                                     android:text="@string/search_check_in_date"
                                     android:textColor="@android:color/black" />
 
-                                <EditText
-                                    android:id="@+id/btnSeeAll_1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="4"
-                                    android:drawableRight="@drawable/ic_date"
-                                    android:drawableTint="@color/colorAccent"
-                                    android:paddingRight="@dimen/text_padding" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="10">
-
-                                <TextView
-                                    android:layout_width="match_parent"
+                                <br.com.sapereaude.maskedEditText.MaskedEditText
+                                    android:id="@+id/edt_check_in"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
-                                    android:text="@string/search_check_out_date"
-                                    android:textColor="@android:color/black" />
+                                    android:hint="ddMMyyyy"
+                                    android:inputType="date"
+                                    android:textColor="@android:color/black"
+                                    app:keep_hint="true"
+                                    mask:allowed_chars="1234567890"
+                                    mask:mask="##-##-####" />
 
-                                <EditText
-                                    android:layout_width="match_parent"
+                                <ImageButton
+                                    android:id="@+id/btn_check_in"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="4"
-                                    android:drawableRight="@drawable/ic_date"
-                                    android:drawableTint="@color/colorAccent"
-                                    android:paddingRight="@dimen/text_padding" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:background="@color/colorAccent"
+                                    android:padding="2dp"
+                                    android:src="@drawable/ic_calendar"
+                                    android:tint="@color/color_white" />
                             </LinearLayout>
+
                         </LinearLayout>
 
 
@@ -289,4 +278,14 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/indicatorView"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:indicatorColor="@android:color/black"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
+</RelativeLayout>

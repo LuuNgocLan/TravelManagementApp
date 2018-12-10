@@ -2,21 +2,21 @@ package luungoclan.min.traveltourmanagement.presenters.tour;
 
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
+import luungoclan.min.traveltourmanagement.base.BasePresenter;
 import luungoclan.min.traveltourmanagement.models.places.PlaceResponse;
+import luungoclan.min.traveltourmanagement.models.slide.SlidesResponse;
 import luungoclan.min.traveltourmanagement.models.tourList.SearchTourResponse;
 import luungoclan.min.traveltourmanagement.models.tourList.TourListResponse;
-import luungoclan.min.traveltourmanagement.views.publicTour.IPublicTourFragment;
+import luungoclan.min.traveltourmanagement.views.publicTour.IPublicTourView;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PublicTourPresenter implements IPublicTourPresenter {
+public class PublicTourImpl extends BasePresenter<IPublicTourView> implements IPublicTourImpl {
 
-    private IPublicTourFragment iPublicTourFragment;
-
-    public PublicTourPresenter(IPublicTourFragment iPublicTourFragment) {
-        this.iPublicTourFragment = iPublicTourFragment;
+    public PublicTourImpl(IPublicTourView view) {
+        super(view);
     }
 
     @Override
@@ -27,15 +27,15 @@ public class PublicTourPresenter implements IPublicTourPresenter {
             @Override
             public void onResponse(Call<TourListResponse> call, Response<TourListResponse> response) {
                 if (response.body().getResultCode() >= 300) {
-                    iPublicTourFragment.getListSaleTourFailure();
+                    view.getListSaleTourFailure();
                 } else if (response.body().getResultCode() == 200) {
-                    iPublicTourFragment.getListSaleTourSuccess(response.body().getDataTourList());
+                    view.getListSaleTourSuccess(response.body().getDataTourList());
                 }
             }
 
             @Override
             public void onFailure(Call<TourListResponse> call, Throwable t) {
-                iPublicTourFragment.getListSaleTourFailure();
+                view.getListSaleTourFailure();
             }
         });
 
@@ -49,15 +49,15 @@ public class PublicTourPresenter implements IPublicTourPresenter {
             @Override
             public void onResponse(Call<TourListResponse> call, Response<TourListResponse> response) {
                 if (response.body().getResultCode() >= 300) {
-                    iPublicTourFragment.getListLatestTourFailure();
+                    view.getListLatestTourFailure();
                 } else if (response.body().getResultCode() == 200) {
-                    iPublicTourFragment.getListLatestTourSuccess(response.body().getDataTourList());
+                    view.getListLatestTourSuccess(response.body().getDataTourList());
                 }
             }
 
             @Override
             public void onFailure(Call<TourListResponse> call, Throwable t) {
-                iPublicTourFragment.getListLatestTourFailure();
+                view.getListLatestTourFailure();
             }
         });
 
@@ -71,15 +71,15 @@ public class PublicTourPresenter implements IPublicTourPresenter {
             @Override
             public void onResponse(Call<PlaceResponse> call, Response<PlaceResponse> response) {
                 if (response.body().getResultCode() >= 300) {
-                    iPublicTourFragment.getListTopPlaceFailure();
+                    view.getListTopPlaceFailure();
                 } else if (response.body().getResultCode() == 200) {
-                    iPublicTourFragment.getListTopPlacesSuccess(response.body().getData());
+                    view.getListTopPlacesSuccess(response.body().getData());
                 }
             }
 
             @Override
             public void onFailure(Call<PlaceResponse> call, Throwable t) {
-                iPublicTourFragment.getListTopPlaceFailure();
+                view.getListTopPlaceFailure();
             }
         });
     }
@@ -92,15 +92,36 @@ public class PublicTourPresenter implements IPublicTourPresenter {
             @Override
             public void onResponse(Call<SearchTourResponse> call, Response<SearchTourResponse> response) {
                 if (response.body().getResultCode() >= 300) {
-                    iPublicTourFragment.searchTourFailure();
+                    view.searchTourFailure();
                 } else if (response.body().getResultCode() == 200) {
-                    iPublicTourFragment.searchTourSuccess(response.body().getData().getTour());
+                    view.searchTourSuccess(response.body().getData().getTour());
                 }
             }
 
             @Override
             public void onFailure(Call<SearchTourResponse> call, Throwable t) {
-                iPublicTourFragment.searchTourFailure();
+                view.searchTourFailure();
+            }
+        });
+    }
+
+    @Override
+    public void getAllSlides() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<SlidesResponse> call = apiService.getAllSlides();
+        call.enqueue(new Callback<SlidesResponse>() {
+            @Override
+            public void onResponse(Call<SlidesResponse> call, Response<SlidesResponse> response) {
+                if (response.body().getResultCode() >= 300) {
+                    view.getAllSlideFailure();
+                } else if (response.body().getResultCode() == 200) {
+                    view.getAllSlideSuccess(response.body().getData().getList());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SlidesResponse> call, Throwable t) {
+                view.getAllSlideFailure();
             }
         });
     }

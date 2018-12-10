@@ -70,7 +70,7 @@ public class TourOfferAdapter extends RecyclerView.Adapter<TourOfferAdapter.MyVi
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 Intent intent = new Intent(context, DetailTourActivity.class);
-                intent.putExtra(Common.ID_TOUR, tourOffer.getId());
+                intent.putExtra(Common.ID_TOUR, tourOffer.getIdDetail());
                 context.startActivity(intent);
             }
         });

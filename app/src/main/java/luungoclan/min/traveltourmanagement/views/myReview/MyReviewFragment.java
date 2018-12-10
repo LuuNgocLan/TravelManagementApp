@@ -26,7 +26,7 @@ import luungoclan.min.traveltourmanagement.views.main.MainActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyReviewFragment extends Fragment implements IMyReviewView {
+public class MyReviewFragment extends Fragment {
 
     @BindView(R.id.rv_listReview)
     RecyclerView rvReviews;
@@ -34,10 +34,8 @@ public class MyReviewFragment extends Fragment implements IMyReviewView {
     @BindView(R.id.tv_msg_no_review)
     TextView tvNoReview;
 
-    private MyReviewImpl myReviewPresenter;
     private ReviewOfUserAdapter adapter;
     private List<Review> mListReviews = new ArrayList<>();
-    private IMyReviewImpl iMyReviewImpl;
 
     public MyReviewFragment() {
         // Required empty public constructor
@@ -49,47 +47,19 @@ public class MyReviewFragment extends Fragment implements IMyReviewView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_review, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         init();
         return view;
     }
 
     private void init() {
-        adapter = new ReviewOfUserAdapter(mListReviews, getContext());
         rvReviews.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+    }
+
+    public void getListReviewFromServer(List<Review> reviewList) {
+        adapter = new ReviewOfUserAdapter(reviewList, getContext());
         rvReviews.setAdapter(adapter);
     }
 
-    public void getListReviewFromServer(String token) {
-        if (token != null) {
-            iMyReviewImpl = new MyReviewImpl(this);
-            iMyReviewImpl.getMyReview(token);
-        } else {
-            mListReviews.clear();
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void getMyDataReviewSuccess(List<Review> reviewList) {
-        if (reviewList != null) {
-            mListReviews.addAll(reviewList);
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void getMyReviewFailure() {
-
-    }
-
-    @Override
-    public void onShowProgressDialog(String msg) {
-
-    }
-
-    @Override
-    public void onDismissProgressDialog() {
-
-    }
 }

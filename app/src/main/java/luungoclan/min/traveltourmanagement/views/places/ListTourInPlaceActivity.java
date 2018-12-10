@@ -8,6 +8,8 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import luungoclan.min.traveltourmanagement.R;
@@ -29,6 +31,9 @@ public class ListTourInPlaceActivity extends BaseActivity implements IListTourIn
 
     @BindView(R.id.tv_msg_no_tour)
     TextView tvMsgNoTour;
+
+    @BindView(R.id.indicatorView)
+    AVLoadingIndicatorView indicatorView;
 
     private ListTourInPlacePresenter listTourInPlacePresenter;
     private int idPlace;
@@ -74,12 +79,13 @@ public class ListTourInPlaceActivity extends BaseActivity implements IListTourIn
             tvMsgNoTour.setVisibility(View.VISIBLE);
 
         }
+        indicatorView.smoothToHide();
 
     }
 
     @Override
     public void getListTourInPlaceFailure() {
-
+        indicatorView.smoothToHide();
     }
 
 }

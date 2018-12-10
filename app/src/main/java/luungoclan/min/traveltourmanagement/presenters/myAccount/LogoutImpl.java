@@ -3,6 +3,7 @@ package luungoclan.min.traveltourmanagement.presenters.myAccount;
 import luungoclan.min.traveltourmanagement.api.ApiClient;
 import luungoclan.min.traveltourmanagement.api.ApiInterface;
 import luungoclan.min.traveltourmanagement.base.BasePresenter;
+import luungoclan.min.traveltourmanagement.models.booking.ListBookingOfUserResponse;
 import luungoclan.min.traveltourmanagement.models.logout.LogoutResponse;
 import luungoclan.min.traveltourmanagement.views.myAccount.IMyAccountFragment;
 import okhttp3.RequestBody;
@@ -35,6 +36,28 @@ public class LogoutImpl extends BasePresenter<IMyAccountFragment> implements ILo
             @Override
             public void onFailure(Call<LogoutResponse> call, Throwable t) {
                 view.logoutFailure("Logout failure!");
+            }
+        });
+    }
+
+    @Override
+    public void getMyBooking(String token) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ListBookingOfUserResponse> call = apiService.getAllBookingOfUser(token);
+        call.enqueue(new Callback<ListBookingOfUserResponse>() {
+            @Override
+            public void onResponse(Call<ListBookingOfUserResponse> call, Response<ListBookingOfUserResponse> response) {
+                if (response.code() >= 300) {
+                    view.getListBookingFailure();
+                } else if (response.code() == 200) {
+                    if (response.body().getResultCode() == 200) {
+                        view.getListBookingSuccess(response.body().getData().getList());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ListBookingOfUserResponse> call, Throwable t) {
+                view.getListBookingFailure();
             }
         });
     }

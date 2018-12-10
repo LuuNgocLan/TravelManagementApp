@@ -17,5 +17,12 @@ public class Common {
     public static final int RESULT_LOGIN_SUCCESS = 2000;
     public static final int REQUEST_LOGIN = 1000;
     public static final int REQUEST_EDIT_PROFILE = 1001;
+
+    public static final String BUNDLE_BOOKING = "BundleBooking";
+    public static final String BUNDLE_NAME_TOUR = "NameTourBooking";
+    public static final String BUNDLE_DEPARTURE = "DayTourDeparture";
+    public static final String BUNDLE_SLOT_REMAIN = "SlotRemain";
+    public static final String BUNDLE_PRICE_ADULT = "PriceAdult";
+    public static final String BUNDLE_TOUR_DETAIL = "TourDetail";
 }
 

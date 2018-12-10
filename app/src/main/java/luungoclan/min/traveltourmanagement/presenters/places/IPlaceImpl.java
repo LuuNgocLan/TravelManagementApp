@@ -1,5 +1,5 @@
 package luungoclan.min.traveltourmanagement.presenters.places;
 
-public interface IPlacePresenter {
+public interface IPlaceImpl {
     public void getPlaceList();
 }
