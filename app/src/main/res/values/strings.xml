@@ -1,11 +1,96 @@
 <resources>
-    <string name="app_name">TravelTourManagement</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="app_name">GoTravel</string>
+    <string name="title_activity_login" translatable="false">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="hint_email">Email</string>
-    <string name="hint_pass">Password</string>
-    <string name="error_email_or_password_is_wrong">Email or password is wrong!</string>
-    <string name="checkbox_text_remember">Remember me</string>
-    <string name="button_text_login">Sign in</string>
+    <string name="hint_email" translatable="false">Email</string>
+    <string name="hint_username" translatable="false">Username</string>
+    <string name="hint_pass" translatable="false">Password</string>
+    <string name="error_email_or_password_is_wrong" translatable="false">Email or password is wrong!</string>
+    <string name="checkbox_text_remember" translatable="false">Remember me</string>
+    <string name="button_text_login" translatable="false">LOGIN </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="tab_name_tour" translatable="false">Tours</string>
+    <string name="tab_name_myaccount" translatable="false">Account</string>
+    <string name="tab_name_places" translatable="false">Places</string>
+    <string name="tab_name_tours" translatable="false">Tours</string>
+    <string name="explore_our_latest_offers">Explore our latest offer</string>
+    <string name="top_destination">Top destinations around the world</string>
+    <string name="button_text_explore">Explore</string>
+    <string name="menu_id_mybooking">id_mybooking</string>
+    <string name="menu_id_myprofile">id_myprofile</string>
+    <string name="menu_id_myreviews">id_myreviews</string>
+    <string name="menu_mybooking">My bookings</string>
+    <string name="menu_myprofile">My profile</string>
+    <string name="menu_myreviews">My reviews</string>
+    <string name="profile_first_name">First name:</string>
+    <string name="profile_last_name">Last name:</string>
+    <string name="profile_email">Email:</string>
+    <string name="profile_phone">Phone:</string>
+    <string name="profile_city" translatable="false">City:</string>
+    <string name="profile_country" translatable="false">Country:</string>
+    <string name="search_01_where" translatable="false">01.Where?</string>
+    <string name="search_your_destination" translatable="false">Your destination</string>
+    <string name="search_02_when" translatable="false">02.When?</string>
+    <string name="search_check_in_date" translatable="false">Check in date</string>
+    <string name="button_proceed_to_results" translatable="false">Proceed to results</string>
+    <string name="search_check_out_date" translatable="false">Check out date</string>
+    <string name="tour_detail_description">Description</string>
+    <string name="tour_detail_programs">Programs</string>
+    <string name="tour_detail_reviews">Reviews</string>
+    <string name="tour_detail_change_date">Change date</string>
+    <string name="message_logging_in">Logging in...</string>
+    <string name="message_invalid_username_empty">Username not empty!</string>
+    <string name="message_invalid_password_empty">Password not empty!</string>
+    <string name="profile_username">Username:</string>
+    <string name="profile_fullname">Full name:</string>
+    <string name="profile_address">Adress:</string>
+    <string name="menu_id_setting">id_setting</string>
+    <string name="menu_setting">Settings</string>
+    <string name="tour_basic_infor_title">Basic informations</string>
+    <string name="tour_infor_of_hotel_title">Hotel information</string>
+    <string name="tour_infor_of_guide_title">Guide information</string>
+    <string name="tour_price_tour_and_surchange_title">Price of tour and single room surcharge</string>
+    <string name="tour_name_title">-Name of tour:</string>
+    <string name="tour_departure_title">-Departure:</string>
+    <string name="tour_slot_remaining_title">-Slot:</string>
+    <string name="tour_gathering_place_title">-Gathering place:</string>
+    <string name="tour_category_title">-Category tour:</string>
+    <string name="tour_name_hotel_title">-Hotel\'s name:</string>
+    <string name="tour_address_hotel_title">-Address:</string>
+    <string name="tour_phone_hotel_title">-Phone :</string>
+    <string name="tour_website_hotel_title">-Website:</string>
+    <string name="tour_guide_name_title">- Guide\'s name:</string>
+    <string name="tour_price_adult">-Adult (over 15 years old):</string>
+    <string name="tour_price_child">-Child:</string>
+    <string name="tour_price_single_room">-Single room:</string>
+    <string name="tour_program_title">Program of tour</string>
+    <string name="tour_reviews_title">All reviews</string>
+    <string name="message_no_review">No review!</string>
+    <string name="review_form_title">Review form</string>
+    <string name="review_form_name">Name (*)</string>
+    <string name="review_form_email">Email (*)</string>
+    <string name="review_form_content">Content</string>
+    <string name="button_submit">Submit</string>
+    <string name="review_form_rating_me">Rating me</string>
+    <string name="tour_change_date_title">Tour in another date</string>
+    <string name="tour_discount_percent">-10%</string>
+    <string name="menu_id_logout">id_logout</string>
+    <string name="menu_logout">Log out</string>
+    <string name="button_register">Sign up</string>
+    <string name="button_login">Sign in</string>
+    <string name="item_tour_departure">Departure: </string>
+    <string name="item_tour_adult_s_price">Adult\'s Price</string>
+    <string name="currency_unit">VNĐ</string>
+    <string name="button_detail">Detail</string>
+    <string name="item_tour_remaining_slots">Remaining slots:</string>
+    <string name="infor_null">--</string>
+    <string name="msg_no_tour_in_this_place">No tour in this Place!</string>
+    <string name="msg_no_review">No Review!</string>
+    <string name="text_change_password_title">Change Password</string>
+    <string name="action_book_now">Book Now!</string>
+    <string name="action_send_review">Send</string>
+    <string name="action_change_pass">Change Password</string>
 </resources>

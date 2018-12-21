@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:background="@drawable/bg_login"
     tools:context=".views.login.LoginActivity">
 
     <ScrollView
@@ -16,47 +13,65 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="?attr/actionBarSize">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher_foreground" />
+
+            <TextView
+                android:id="@+id/slogan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Go TRAVEL"
+                android:textColor="#5F5D70"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/compoment_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:drawableRight="@drawable/ic_email"
-                android:drawableTint="@color/color_white"
-                android:background="@drawable/edittext_style"
-                android:hint="@string/hint_email"
-                android:textColorHint="@color/color_white"
-                android:inputType="textEmailAddress"
+                android:layout_height="64dp"
+                android:layout_below="@+id/slogan"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/background_edittext_username"
+                android:drawableLeft="@drawable/ic_account_normal"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/colorTitle"
+                android:hint="@string/hint_username"
                 android:padding="@dimen/text_padding"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/colorTitle"
+                android:textColorHint="#5F5D70" />
 
             <EditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="64dp"
                 android:layout_below="@+id/edt_email"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/compoment_vertical_margin"
-                android:drawableRight="@drawable/ic_vpn_key"
-                android:drawableTint="@color/color_white"
-                android:background="@drawable/edittext_style"
+                android:background="@drawable/background_edittext_pass"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/colorTitle"
                 android:hint="@string/hint_pass"
-                android:textColorHint="@color/color_white"
                 android:inputType="textPassword"
                 android:padding="@dimen/text_padding"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/colorTitle"
+                android:textColorHint="#5F5D70" />
 
             <TextView
-                android:id="@+id/tvLogin_SomethingWrong"
+                android:id="@+id/tv_error_SomethingWrong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edt_password"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:padding="@dimen/text_padding"
                 android:text="@string/error_email_or_password_is_wrong"
                 android:textColor="#ff0000"
@@ -66,17 +81,15 @@
                 android:id="@+id/cb_remember"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvLogin_SomethingWrong"
-                android:textColor="@color/color_white"
-                android:layout_marginBottom="@dimen/compoment_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:text="@string/checkbox_text_remember" />
+                android:layout_below="@+id/tv_error_SomethingWrong"
+                android:layout_margin="@dimen/compoment_vertical_margin"
+                android:text="@string/checkbox_text_remember"
+                android:textColor="@color/colorTitle" />
 
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_below="@+id/cb_remember"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -85,6 +98,16 @@
                 android:text="@string/button_text_login"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Register"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

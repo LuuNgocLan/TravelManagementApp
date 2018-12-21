@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gray"
+    tools:context=".views.publicTour.PublicTourFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_slide">
+
+                    </android.support.v4.view.ViewPager>
+
+                    <LinearLayout
+                        android:id="@+id/ll_dots"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dots_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="11dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="@dimen/margin_item"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingRight="@dimen/text_padding"
+                        android:paddingTop="@dimen/text_padding">
+
+                        <Button
+                            android:id="@+id/btn_where"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_button"
+                            android:background="@drawable/edittext_style"
+                            android:drawableRight="@drawable/ic_expand"
+                            android:text="@string/search_01_where"
+                            android:textAllCaps="false"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_whereSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_places"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp" />
+
+                        </LinearLayout>
+
+
+                        <Button
+                            android:id="@+id/btn_when"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_button"
+                            android:background="@drawable/edittext_style"
+                            android:drawableRight="@drawable/ic_expand"
+                            android:text="@string/search_02_when"
+                            android:textAllCaps="false"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_wheneSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:text="@string/search_check_in_date"
+                                    android:textColor="@android:color/black" />
+
+                                <br.com.sapereaude.maskedEditText.MaskedEditText
+                                    android:id="@+id/edt_check_in"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="6"
+                                    android:hint="ddMMyyyy"
+                                    android:inputType="date"
+                                    android:textColor="@android:color/black"
+                                    app:keep_hint="true"
+                                    mask:allowed_chars="1234567890"
+                                    mask:mask="##-##-####" />
+
+                                <ImageButton
+                                    android:id="@+id/btn_check_in"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:background="@color/colorAccent"
+                                    android:padding="2dp"
+                                    android:src="@drawable/ic_calendar"
+                                    android:tint="@color/color_white" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/text_padding">
+
+                            <Button
+                                android:id="@+id/btn_proceedToResult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/height_button"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/shape_button_procees_result"
+                                android:paddingLeft="@dimen/text_padding"
+                                android:paddingRight="@dimen/text_padding"
+                                android:text="@string/button_proceed_to_results"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/explore_our_latest_offers"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnSeeAll_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="11dp"
+                        android:padding="@dimen/text_padding"
+                        android:text="see All"
+                        android:textColor="@color/colorAccent" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_sale_tour_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_latestOffers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/explore_our_latest_offers"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnSeeAll_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="11dp"
+                        android:padding="@dimen/text_padding"
+                        android:text="see All"
+                        android:textColor="@color/colorAccent" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_latest_tour_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+
+                    <include layout="@layout/item_tour_placeholder" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_topDestinations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/explore_our_latest_offers"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <android.support.v17.leanback.widget.HorizontalGridView
+                    android:id="@+id/rv_topPlaces"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/indicatorView"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:indicatorColor="@android:color/black"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
+</RelativeLayout>
